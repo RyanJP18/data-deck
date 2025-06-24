@@ -7,6 +7,11 @@
 	"license": "GPL 2.0",
 	"private": true,
 	"type": "module",
+    "files": ["dist"],
+    "main": "dist/data-deck.umd.js",
+    "publishConfig": { "registry": "todo" },
+    "module": "dist/data-deck.es.js",
+    "types": "dist/types/src/index.d.ts",
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc && vite build --mode=production",
