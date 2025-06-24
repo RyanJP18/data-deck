@@ -1,0 +1,27 @@
+* {
+	box-sizing: border-box;
+}
+
+// a, 
+// a:visited, 
+// a:hover, 
+// a:active {
+//     color: $accent;
+// }
+
+button {
+    outline: none;
+    border: 0;
+    background-color: unset;
+    color: unset;
+
+	&:focus {
+		outline: none;
+		box-shadow: none;
+	}
+}
+
+input, textarea {
+    outline: none;
+    border: 0;
+}
