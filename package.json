@@ -1,20 +1,21 @@
 {
 	"name": "data-deck",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "An extensible and data-driven component for Vue, designed to display data in both table and card formats.",
 	"repository": "git@github.com:RyanJP18/data-deck.git",
 	"author": "RyanJP18 <contact@ryanjp.co.uk>",
 	"license": "GPL 2.0",
 	"private": true,
 	"type": "module",
-    "files": ["dist"],
-    "main": "dist/data-deck.umd.js",
-    "publishConfig": { "registry": "todo" },
-    "module": "dist/data-deck.es.js",
-    "types": "dist/types/src/index.d.ts",
+	"files": ["dist"],
+	"main": "dist/index.js",
+	"module": "dist/index.es.js",
+	"types": "dist/index.d.ts",
+	"publishConfig": { "access": "public" },
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc && vite build --mode=production",
+		"build": "vue-tsc && vite build --mode=production && yarn run types",
+		"types": "vue-tsc --noEmit false --declaration --emitDeclarationOnly --outDir dist",
 		"typecheck": "vue-tsc --noEmit -p tsconfig.json --composite false",
 		"lint": "eslint . --fix",
 		"test": "vitest run"
@@ -36,6 +37,7 @@
 		"sass": "^1.77.6",
 		"typescript": "^5.0.2",
 		"vite": "^6.2.5",
+		"vite-plugin-dts": "^4.5.4",
 		"vitest": "^3.1.2",
 		"vue-tsc": "^2.2.8"
 	}

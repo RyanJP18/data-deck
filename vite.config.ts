@@ -23,18 +23,18 @@ export default defineConfig(() => {
             environment: 'jsdom',
             include: ['**/*.test.ts', '**/*.spec.ts'],
         },
-        server: {
-        }, 
         build: {
-            minify: true,
-            sourcemap: false,
+            sourcemap: true,
+            lib: {
+                entry: path.resolve(__dirname, "src/index.ts"),
+                name: "DataDeck",
+                fileName: (format) => `index.${format}.js`,
+                formats: ["es", "cjs"],
+            },
             rollupOptions: {
+                external: ['vue'],
                 output: {
-                    manualChunks(id) {
-                        if (id.includes('node_modules')) {
-                            return id.toString().split('node_modules/')[1].split('/')[0].toString();
-                        }
-                    }
+                    globals: { vue: 'Vue' },
                 }
             }
         },

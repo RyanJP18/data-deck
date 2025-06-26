@@ -1,11 +1,13 @@
 <script setup lang="ts">
-
+import DataDeckTable from '@/components/DataDeckTable.vue';
+import DataDeckCards from '@/components/DataDeckCards.vue';
 </script>
 
 
 <template>
     <div class="app">
-        hello world
+        <DataDeckTable :headers="['Test', 'Test2']" :data="[['Val1', 'Val2'], ['Val3', 'Val4']]" />
+        <DataDeckCards :headers="['Test', 'Test2']" :data="[['Val1', 'Val2'], ['Val3', 'Val4']]" />
     </div>
 </template>
 
