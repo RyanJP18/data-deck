@@ -13,7 +13,6 @@ const paginator = ref(props.modelValue);
 const emit = defineEmits(['update:modelValue']);
 
 
-
 watch(() => props.processedData, newVal => {
     if (paginator.value.manager === 'server') {
         return; // last page index is dictated by the server
