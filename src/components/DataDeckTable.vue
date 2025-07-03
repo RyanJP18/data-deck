@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<DataDeckProps>(), {
 
 const paginator = ref(props.paginator);
 
-const { dataCount, displayData } = useDataDeck({ data: props.data, headerMetadata: props.headerMetadata, paginator: paginator });
+const { processedData, pageData } = useDataDeck({ data: props.data, headerMetadata: props.headerMetadata, paginator: paginator });
 
 </script>
 
@@ -28,11 +28,11 @@ const { dataCount, displayData } = useDataDeck({ data: props.data, headerMetadat
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(row, rowIndex) in displayData" :key="rowIndex">
+                <tr v-for="(row, rowIndex) in pageData" :key="rowIndex">
                     <td v-for="column in headerMetadata" :key="column">{{ row[column.value] }}</td>
                 </tr>
             </tbody>
         </table>
-        <FooterPanel v-model="paginator" :data-count="dataCount" @update:modelValue="$event => paginator = $event" />
+        <FooterPanel v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
     </div>
 </template>

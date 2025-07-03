@@ -6,14 +6,12 @@ const useDataDeck = (props: DataDeckProps) => {
     const currentPage = ref(props.paginator?.currentPage ?? 1);
 
     const filteredData = computed(() => props.data);
-    const sortedData = computed(() => filteredData.value);
+    const processedData = computed(() => filteredData.value);
 
-    const dataCount = computed(() => sortedData.value.length);
-
-    const displayData = computed(() => {
+    const pageData = computed(() => {
         const start = (currentPage.value - 1) * itemsPerPage.value;
         const end = start + itemsPerPage.value;
-        return sortedData.value.slice(start, end);
+        return processedData.value.slice(start, end);
     });
 
     watch(() => props.paginator, newVal => {
@@ -23,8 +21,8 @@ const useDataDeck = (props: DataDeckProps) => {
 
     return {
         currentPage,
-        dataCount,
-        displayData
+        processedData,
+        pageData
     }
 };
 

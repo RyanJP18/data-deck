@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, watch } from 'vue';
 import type DataPaginator from "./DataPaginator";
 
 const props = withDefaults(defineProps<{
     modelValue: DataPaginator;
-    dataCount: number;
+    processedData: Record<string, string>[];
 }>(), {
 });
 
@@ -13,13 +13,16 @@ const paginator = ref(props.modelValue);
 const emit = defineEmits(['update:modelValue']);
 
 
-const lastPage = computed(() => {
+
+watch(() => props.processedData, newVal => {
     if (paginator.value.manager === 'server') {
-        return paginator.lastPage; // server dictates
-    } else {
-        return Math.ceil(props.dataCount / paginator.value.itemsPerPage); // calculate the last page on the fly
+        return; // last page index is dictated by the server
     }
-});
+
+    // calculate last page index on the client
+    paginator.value.lastPage = Math.ceil(props.processedData.length / paginator.value.itemsPerPage);
+    emit('update:modelValue', paginator.value);
+}, { deep: true, immediate: true });
 
 const back = () => {
     if (paginator.value.currentPage <= 1) {
@@ -31,7 +34,7 @@ const back = () => {
 };
 
 const next = () => {
-    if (paginator.value.currentPage >= lastPage.value) {
+    if (paginator.value.currentPage >= paginator.value.lastPage) {
         return;
     }
     
@@ -45,7 +48,7 @@ const next = () => {
 <template>
     <div>
         <button @click="back">◄</button>
-        <p>Page {{ modelValue.currentPage }} of {{ lastPage }}</p>
+        <p>Page {{ paginator.currentPage }} of {{ paginator.lastPage }}</p>
         <button @click="next">►</button>
     </div>
 </template>
