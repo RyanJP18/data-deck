@@ -8,14 +8,13 @@ import FooterPanel from '@/components/FooterPanel.vue';
 
 const props = withDefaults(defineProps<DataDeckProps>(), {
     headerMetadata: () => [] as HeaderMetadata[],
-    paginator: { itemsPerPage: 10, currentPage: 1, lastPage: 1, manager: 'client' } as DataPaginator,
+    paginator: { itemsPerPage: 2, currentPage: 1, lastPage: 1, manager: 'client' } as DataPaginator,
     loading: false,
 });
 
 const paginator = ref(props.paginator);
 
-const { displayData } = useDataDeck({ data: props.data, headerMetadata: props.headerMetadata, paginator: paginator });
-
+const { dataCount, displayData } = useDataDeck({ data: props.data, headerMetadata: props.headerMetadata, paginator: paginator });
 
 </script>
 
@@ -34,6 +33,6 @@ const { displayData } = useDataDeck({ data: props.data, headerMetadata: props.he
                 </tr>
             </tbody>
         </table>
-        <FooterPanel v-model="paginator" @update:modelValue="$event => paginator = $event" />
+        <FooterPanel v-model="paginator" :data-count="dataCount" @update:modelValue="$event => paginator = $event" />
     </div>
 </template>

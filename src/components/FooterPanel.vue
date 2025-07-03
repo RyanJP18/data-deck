@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import type DataPaginator from "./DataPaginator";
 
 const props = withDefaults(defineProps<{
     modelValue: DataPaginator;
+    dataCount: number;
 }>(), {
 });
 
@@ -11,6 +12,14 @@ const paginator = ref(props.modelValue);
 
 const emit = defineEmits(['update:modelValue']);
 
+
+const lastPage = computed(() => {
+    if (paginator.value.manager === 'server') {
+        return paginator.lastPage; // server dictates
+    } else {
+        return Math.ceil(props.dataCount / paginator.value.itemsPerPage); // calculate the last page on the fly
+    }
+});
 
 const back = () => {
     if (paginator.value.currentPage <= 1) {
@@ -22,7 +31,7 @@ const back = () => {
 };
 
 const next = () => {
-    if (paginator.value.currentPage >= paginator.value.totalPages) {
+    if (paginator.value.currentPage >= lastPage.value) {
         return;
     }
     
@@ -36,7 +45,7 @@ const next = () => {
 <template>
     <div>
         <button @click="back">◄</button>
-        <p>Page {{ modelValue.currentPage }} of {{ modelValue.totalPages }}</p>
+        <p>Page {{ modelValue.currentPage }} of {{ lastPage }}</p>
         <button @click="next">►</button>
     </div>
 </template>

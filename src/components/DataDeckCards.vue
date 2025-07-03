@@ -6,7 +6,7 @@ import useDataDeck from '@/composables/useDataDeck';
 
 const props = withDefaults(defineProps<DataDeckProps>(), {
     headerMetadata: () => [] as HeaderMetadata[],
-    paginator: { itemsPerPage: 10, currentPage: 1, lastPage: 1, manager: 'client' } as DataPaginator,
+    paginator: { itemsPerPage: 2, currentPage: 1, lastPage: 1, manager: 'client' } as DataPaginator,
     loading: false,
 });
 
