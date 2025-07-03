@@ -25,7 +25,7 @@ const { displayData } = useDataDeck({ data: props.data, headerMetadata: props.he
         <table>
             <thead>
                 <tr>
-                    <th v-for="header in headerMetadata" :key="header">{{ header.label }}</th>
+                    <th v-for="header in headerMetadata" :key="header"><b>{{ header.label }}</b></th>
                 </tr>
             </thead>
             <tbody>
