@@ -11,10 +11,10 @@ import HeaderPanel from '@/components/HeaderPanel.vue';
 
 const props = withDefaults(defineProps<DataDeckProps>(), {
     headerMetadata: () => [] as HeaderMetadata[],
+    selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
     selection: () => [] as Record<string, string>[],
-    selectionSettings: { readOnly: false } as SelectionSettings,
-    querySettings: { filterQuery: '', sortColumn: '', sortDirection: 'A-Z' } as QuerySettings,
-    paginator: { itemsPerPage: 2, currentPageNo: 1, lastPageNo: 1, manager: 'client' } as DataPaginator,
+    querySettings: () => ({ filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
+    paginator: () => ({ itemsPerPage: 2, currentPageNo: 1, lastPageNo: 1, manager: 'client' }) as DataPaginator,
     loading: false,
 });
 
@@ -22,7 +22,7 @@ const emit = defineEmits(['selected', 'deselected']);
 
 
 const selection = ref(props.selection);
-watch(selection, (newVal, oldVal) => {
+watch(selection, () => {
     if (props.selectionSettings.fireAndForget) {
         emit('selected', selection.value);
     } else {
@@ -33,8 +33,7 @@ watch(selection, (newVal, oldVal) => {
 const querySettings = ref(props.querySettings);
 const paginator = ref(props.paginator);
 
-const { processedData, pageData, select } = useDataDeck({ data: props.data, headerMetadata: props.headerMetadata, querySettings: querySettings, selectionSettings: props.selectionSettings, paginator: paginator, selection: selection });
-
+const { processedData, pageData, select } = useDataDeck(props.data, props.headerMetadata, props.selectionSettings, selection, querySettings, paginator);
 </script>
 
 
@@ -48,7 +47,7 @@ const { processedData, pageData, select } = useDataDeck({ data: props.data, head
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(row, rowIndex) in pageData" :key="rowIndex" @click="select">
+                <tr v-for="(row, rowIndex) in pageData" :key="rowIndex" @click="select(row)">
                     <td v-for="column in headerMetadata" :key="column">{{ row[column.value] }}</td>
                 </tr>
             </tbody>

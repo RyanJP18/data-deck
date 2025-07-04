@@ -26,10 +26,10 @@ export default defineConfig(() => {
         build: {
             sourcemap: true,
             lib: {
-                entry: path.resolve(__dirname, "src/index.ts"),
-                name: "DataDeck",
+                entry: path.resolve(__dirname, 'src/index.ts'),
+                name: 'DataDeck',
                 fileName: (format) => `index.${format}.js`,
-                formats: ["es", "cjs"],
+                formats: ['es', 'cjs'],
             },
             rollupOptions: {
                 external: ['vue'],

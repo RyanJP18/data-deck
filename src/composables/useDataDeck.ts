@@ -1,34 +1,44 @@
 import { ref, computed, watch } from 'vue';
-import type DataDeckProps from '@/interfaces/DataDeckProps';
+import type HeaderMetadata from '@/interfaces/HeaderMetadata';
+import type SelectionSettings from '@/interfaces/SelectionSettings';
+import type QuerySettings from '@/interfaces/QuerySettings';
+import type DataPaginator from '@/interfaces/DataPaginator';
 
-const useDataDeck = (props: DataDeckProps) => {
-    const itemsPerPage = ref(props.paginator?.itemsPerPage ?? 2);
-    const currentPageNo = ref(props.paginator?.currentPageNo ?? 1);
+const useDataDeck = (
+    data: Record<string, string>[], 
+    headerMetadata: HeaderMetadata[], 
+    selectionSettings: SelectionSettings,
+    selection: Record<string, string>[], 
+    querySettings: QuerySettings,
+    paginator: DataPaginator) => {
+
+    const itemsPerPage = ref(paginator?.itemsPerPage ?? 2);
+    const currentPageNo = ref(paginator?.currentPageNo ?? 1);
 
     
     // Selection logic
     // ---
     const select = (item: Record<string, string>) => {
-        if (props.selectionSettings?.readOnly) { 
+        if (selectionSettings?.readOnly) { 
             return;
         }
 
-        if (props.selectionSettings?.fireAndForget) {
-            props.selection?.value.push(item);
+        if (selectionSettings?.fireAndForget) {
+            selection?.value.push(item);
             return;
         }
 
-        const selectedIdx = props.selection?.value.indexOf(item);
+        const selectedIdx = selection?.value.indexOf(item);
         const alreadySelected = selectedIdx > -1;
 
         if (!alreadySelected) {
-            if (!props.selectionSettings?.allowMultiple) {
-                props.selection?.value.splice(0, 1);
+            if (!selectionSettings?.allowMultiple) {
+                selection?.value.splice(0, 1);
             }
 
-            props.selection?.value.push(item);
+            selection?.value.push(item);
         } else {
-            props.selection?.value.splice(selectedIdx, 1);
+            selection?.value.splice(selectedIdx, 1);
         }
     };
     // ---
@@ -36,18 +46,18 @@ const useDataDeck = (props: DataDeckProps) => {
 
     // Filter logic
     // ---
-    const processedFilterQuery = computed(() => props.querySettings?.value.filterQuery.toLowerCase() || '');
+    const processedFilterQuery = computed(() => querySettings?.value.filterQuery.toLowerCase() || '');
     watch(processedFilterQuery, () => currentPageNo.value = 1);
 
     // Determine which columns are whitelisted for use in filtering
-    const filterWhitelist = computed(() => props.headerMetadata
+    const filterWhitelist = computed(() => headerMetadata
         .filter(metadata => metadata.useInFilter ?? true)
         .map(metadata => metadata.value)
     );
 
     // Apply filter
     const filteredData = computed(() => 
-        props.data.filter(item => filterWhitelist.value.map(key => item[key]) // get any fields from the data that are in our filter keys
+        data.filter(item => filterWhitelist.value.map(key => item[key]) // get any fields from the data that are in our filter keys
             .some(value => value.toLowerCase().includes(processedFilterQuery.value)))); // do a comparison against the filter
     // ---
 
@@ -55,13 +65,13 @@ const useDataDeck = (props: DataDeckProps) => {
     // Sort logic
     // ---
     const processedData = computed(() => {
-        if (props.querySettings?.value.sortColumn === '') {
+        if (querySettings?.value.sortColumn === '') {
             return filteredData.value; // Just display data in its default array order if no sort is specified
         } 
     
         return filteredData.value.slice().sort((rawA, rawB) => {
-            const a = (rawA[props.querySettings?.value.sortColumn]?.toString() || '').toLowerCase();
-            const b = (rawB[props.querySettings?.value.sortColumn]?.toString() || '').toLowerCase();
+            const a = (rawA[querySettings?.value.sortColumn]?.toString() || '').toLowerCase();
+            const b = (rawB[querySettings?.value.sortColumn]?.toString() || '').toLowerCase();
             
             // If both values start with numbers, do a numerical sort instead
             const numMatchA = a.match(/^\d+/);
@@ -70,13 +80,13 @@ const useDataDeck = (props: DataDeckProps) => {
                 const numA = parseInt(numMatchA[0]);
                 const numB = parseInt(numMatchB[0]);
                 if (numA !== numB) {
-                    return props.querySettings?.value.sortDirection === 'A-Z' ? numA - numB : numB - numA;
+                    return querySettings?.value.sortDirection === 'A-Z' ? numA - numB : numB - numA;
                 }
             }
 
             // Default to a string sort
-            if (a < b) return props.querySettings?.value.sortDirection === 'A-Z' ? -1 : 1;
-            if (a > b) return props.querySettings?.value.sortDirection === 'A-Z' ? 1 : -1;
+            if (a < b) return querySettings?.value.sortDirection === 'A-Z' ? -1 : 1;
+            if (a > b) return querySettings?.value.sortDirection === 'A-Z' ? 1 : -1;
             return 0;
         });
     });
@@ -91,14 +101,14 @@ const useDataDeck = (props: DataDeckProps) => {
         return processedData.value.slice(start, end);
     });
 
-    watch(() => props.paginator, newVal => {
+    watch(() => paginator, newVal => {
         itemsPerPage.value = newVal?.value.itemsPerPage ?? itemsPerPage.value;
         currentPageNo.value = newVal?.value.currentPageNo ?? currentPageNo.value;
     }, { deep: true });
     // ---
 
 
-    return { processedData, pageData, select }
+    return { processedData, pageData, select };
 };
 
 export default useDataDeck;

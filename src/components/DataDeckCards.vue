@@ -11,10 +11,10 @@ import HeaderPanel from '@/components/HeaderPanel.vue';
 
 const props = withDefaults(defineProps<DataDeckProps>(), {
     headerMetadata: () => [] as HeaderMetadata[],
+    selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
     selection: () => [] as Record<string, string>[],
-    selectionSettings: { readOnly: false, fireAndForget: true, allowMultiple: false } as SelectionSettings,
-    querySettings: { filterQuery: '', sortColumn: '', sortDirection: 'A-Z' } as QuerySettings,
-    paginator: { itemsPerPage: 2, currentPageNo: 1, lastPageNo: 1, manager: 'client' } as DataPaginator,
+    querySettings: () => ({ filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
+    paginator: () => ({ itemsPerPage: 2, currentPageNo: 1, lastPageNo: 1, manager: 'client' }) as DataPaginator,
     loading: false,
 });
 
@@ -23,6 +23,9 @@ const emit = defineEmits(['selected', 'deselected']);
 
 const selection = ref(props.selection);
 watch(selection, (newVal, oldVal) => {
+    console.log(newVal);
+    console.log(oldVal);
+
     if (props.selectionSettings.fireAndForget) {
         emit('selected', selection.value);
     } else {
@@ -33,15 +36,14 @@ watch(selection, (newVal, oldVal) => {
 const querySettings = ref(props.querySettings);
 const paginator = ref(props.paginator);
 
-const { processedData, pageData, select } = useDataDeck({ data: props.data, headerMetadata: props.headerMetadata, selection: selection, querySettings: querySettings, selectionSettings: props.selectionSettings, paginator: paginator, selection: selection });
-
+const { processedData, pageData, select } = useDataDeck(props.data, props.headerMetadata, props.selectionSettings, selection, querySettings, paginator);
 </script>
 
 
 <template>
     <div>
         <HeaderPanel v-model="querySettings" :headerMetadata="headerMetadata" />
-        <div v-for="(card, cardIndex) in pageData" :key="cardIndex" @click="select">
+        <div v-for="(card, cardIndex) in pageData" :key="cardIndex" @click="select(card)">
             <div v-for="column in headerMetadata" :key="column"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
         </div>
         <FooterPanel v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />

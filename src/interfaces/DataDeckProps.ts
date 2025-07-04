@@ -1,7 +1,7 @@
-import type HeaderMetadata from "@/interfaces/HeaderMetadata";
-import type SelectionSettings from "@/interfaces/SelectionSettings";
-import type QuerySettings from "@/interfaces/QuerySettings";
-import type DataPaginator from "@/interfaces/DataPaginator";
+import type HeaderMetadata from '@/interfaces/HeaderMetadata';
+import type SelectionSettings from '@/interfaces/SelectionSettings';
+import type QuerySettings from '@/interfaces/QuerySettings';
+import type DataPaginator from '@/interfaces/DataPaginator';
 
 export default interface DataDeckProps {
     data: Record<string, string>[];

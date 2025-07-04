@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import type DataPaginator from "./DataPaginator";
+import type DataPaginator from '@/interfaces/DataPaginator';
 
 const props = withDefaults(defineProps<{
     modelValue: DataPaginator;
@@ -13,7 +13,7 @@ const paginator = ref(props.modelValue);
 const emit = defineEmits(['update:modelValue']);
 
 
-watch(() => props.processedData, newVal => {
+watch(() => props.processedData, () => {
     if (paginator.value.manager === 'server') {
         return; // last page index is dictated by the server
     }

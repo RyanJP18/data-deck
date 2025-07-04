@@ -1,13 +1,12 @@
 <script setup lang="ts">
+import type HeaderMetadata from '@/interfaces/HeaderMetadata';
+import type QuerySettings from '@/interfaces/QuerySettings';
 
 const props = withDefaults(defineProps<{
     modelValue: QuerySettings;
     headerMetadata: HeaderMetadata[];
 }>(), {
 });
-
-const emit = defineEmits(['update:modelValue']);
-
 </script>
 
 
