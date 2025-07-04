@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, type Ref } from 'vue';
 import type HeaderMetadata from '@/interfaces/HeaderMetadata';
 import type SelectionSettings from '@/interfaces/SelectionSettings';
 import type QuerySettings from '@/interfaces/QuerySettings';
@@ -8,37 +8,37 @@ const useDataDeck = (
     data: Record<string, string>[], 
     headerMetadata: HeaderMetadata[], 
     selectionSettings: SelectionSettings,
-    selection: Record<string, string>[], 
-    querySettings: QuerySettings,
-    paginator: DataPaginator) => {
+    selection: Ref<Record<string, string>[]>, 
+    querySettings: Ref<QuerySettings>,
+    paginator: Ref<DataPaginator>) => {
 
-    const itemsPerPage = ref(paginator?.itemsPerPage ?? 2);
-    const currentPageNo = ref(paginator?.currentPageNo ?? 1);
+    const itemsPerPage = ref(paginator.value.itemsPerPage);
+    const currentPageNo = ref(paginator.value.currentPageNo);
 
     
     // Selection logic
     // ---
     const select = (item: Record<string, string>) => {
-        if (selectionSettings?.readOnly) { 
+        if (selectionSettings.readOnly) { 
             return;
         }
 
-        if (selectionSettings?.fireAndForget) {
-            selection?.value.push(item);
+        if (selectionSettings.fireAndForget) {
+            selection.value.push(item);
             return;
         }
 
-        const selectedIdx = selection?.value.indexOf(item);
+        const selectedIdx = selection.value.indexOf(item);
         const alreadySelected = selectedIdx > -1;
 
         if (!alreadySelected) {
-            if (!selectionSettings?.allowMultiple) {
-                selection?.value.splice(0, 1);
+            if (!selectionSettings.allowMultiple) {
+                selection.value.splice(0, 1);
             }
 
-            selection?.value.push(item);
+            selection.value.push(item);
         } else {
-            selection?.value.splice(selectedIdx, 1);
+            selection.value.splice(selectedIdx, 1);
         }
     };
     // ---
@@ -46,7 +46,7 @@ const useDataDeck = (
 
     // Filter logic
     // ---
-    const processedFilterQuery = computed(() => querySettings?.value.filterQuery.toLowerCase() || '');
+    const processedFilterQuery = computed(() => querySettings.value.filterQuery.toLowerCase() || '');
     watch(processedFilterQuery, () => currentPageNo.value = 1);
 
     // Determine which columns are whitelisted for use in filtering
@@ -65,13 +65,13 @@ const useDataDeck = (
     // Sort logic
     // ---
     const processedData = computed(() => {
-        if (querySettings?.value.sortColumn === '') {
+        if (querySettings.value.sortColumn === '') {
             return filteredData.value; // Just display data in its default array order if no sort is specified
         } 
     
         return filteredData.value.slice().sort((rawA, rawB) => {
-            const a = (rawA[querySettings?.value.sortColumn]?.toString() || '').toLowerCase();
-            const b = (rawB[querySettings?.value.sortColumn]?.toString() || '').toLowerCase();
+            const a = (rawA[querySettings.value.sortColumn]?.toString() || '').toLowerCase();
+            const b = (rawB[querySettings.value.sortColumn]?.toString() || '').toLowerCase();
             
             // If both values start with numbers, do a numerical sort instead
             const numMatchA = a.match(/^\d+/);
@@ -80,13 +80,13 @@ const useDataDeck = (
                 const numA = parseInt(numMatchA[0]);
                 const numB = parseInt(numMatchB[0]);
                 if (numA !== numB) {
-                    return querySettings?.value.sortDirection === 'A-Z' ? numA - numB : numB - numA;
+                    return querySettings.value.sortDirection === 'A-Z' ? numA - numB : numB - numA;
                 }
             }
 
             // Default to a string sort
-            if (a < b) return querySettings?.value.sortDirection === 'A-Z' ? -1 : 1;
-            if (a > b) return querySettings?.value.sortDirection === 'A-Z' ? 1 : -1;
+            if (a < b) return querySettings.value.sortDirection === 'A-Z' ? -1 : 1;
+            if (a > b) return querySettings.value.sortDirection === 'A-Z' ? 1 : -1;
             return 0;
         });
     });
@@ -102,8 +102,8 @@ const useDataDeck = (
     });
 
     watch(() => paginator, newVal => {
-        itemsPerPage.value = newVal?.value.itemsPerPage ?? itemsPerPage.value;
-        currentPageNo.value = newVal?.value.currentPageNo ?? currentPageNo.value;
+        itemsPerPage.value = newVal.value.itemsPerPage ?? itemsPerPage.value;
+        currentPageNo.value = newVal.value.currentPageNo ?? currentPageNo.value;
     }, { deep: true });
     // ---
 

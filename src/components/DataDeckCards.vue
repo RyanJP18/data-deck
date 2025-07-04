@@ -44,7 +44,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
     <div>
         <HeaderPanel v-model="querySettings" :headerMetadata="headerMetadata" />
         <div v-for="(card, cardIndex) in pageData" :key="cardIndex" @click="select(card)">
-            <div v-for="column in headerMetadata" :key="column"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
+            <div v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
         </div>
         <FooterPanel v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
     </div>

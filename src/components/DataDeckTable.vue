@@ -43,12 +43,12 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
         <table>
             <thead>
                 <tr>
-                    <th v-for="header in headerMetadata" :key="header"><b>{{ header.label }}</b></th>
+                    <th v-for="header in headerMetadata" :key="header.value"><b>{{ header.label }}</b></th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(row, rowIndex) in pageData" :key="rowIndex" @click="select(row)">
-                    <td v-for="column in headerMetadata" :key="column">{{ row[column.value] }}</td>
+                    <td v-for="column in headerMetadata" :key="column.value">{{ row[column.value] }}</td>
                 </tr>
             </tbody>
         </table>
