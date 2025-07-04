@@ -1,6 +1,6 @@
 export default interface DataPaginator {
     itemsPerPage: number;
-    currentPage: number;
-    lastPage: number;
+    currentPageNo: number;
+    lastPageNo: number;
     manager: 'client' | 'server';
 };

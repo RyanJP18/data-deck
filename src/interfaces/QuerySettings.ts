@@ -1,4 +1,4 @@
-export default interface DataSettings {
+export default interface QuerySettings {
     filterQuery: string;
     sortColumn: string;
     sortDirection: string;

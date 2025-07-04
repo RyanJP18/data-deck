@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 const props = withDefaults(defineProps<{
-    modelValue: DataSettings;
+    modelValue: QuerySettings;
     headerMetadata: HeaderMetadata[];
 }>(), {
 });
@@ -18,8 +18,9 @@ const emit = defineEmits(['update:modelValue']);
             <option v-for="header in props.headerMetadata" :value="header.value" :key="header.value">{{ header.label }}</option>
         </select>
         <select v-model="modelValue.sortDirection">
-            <option>Ascending</option>
-            <option>Descending</option>
+            <option>A-Z
+            </option>
+            <option>Z-A</option>
         </select>
     </div>
 </template>

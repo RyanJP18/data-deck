@@ -19,25 +19,25 @@ watch(() => props.processedData, newVal => {
     }
 
     // calculate last page index on the client
-    paginator.value.lastPage = Math.ceil(props.processedData.length / paginator.value.itemsPerPage);
+    paginator.value.lastPageNo = Math.ceil(props.processedData.length / paginator.value.itemsPerPage);
     emit('update:modelValue', paginator.value);
 }, { deep: true, immediate: true });
 
 const back = () => {
-    if (paginator.value.currentPage <= 1) {
+    if (paginator.value.currentPageNo <= 1) {
         return;
     }
 
-    paginator.value.currentPage--;
+    paginator.value.currentPageNo--;
     emit('update:modelValue', paginator.value);
 };
 
 const next = () => {
-    if (paginator.value.currentPage >= paginator.value.lastPage) {
+    if (paginator.value.currentPageNo >= paginator.value.lastPageNo) {
         return;
     }
     
-    paginator.value.currentPage++;
+    paginator.value.currentPageNo++;
     emit('update:modelValue', paginator.value);
 };
 
@@ -47,7 +47,7 @@ const next = () => {
 <template>
     <div>
         <button @click="back">◄</button>
-        <p>Page {{ paginator.currentPage }} of {{ paginator.lastPage }}</p>
+        <p>Page {{ paginator.currentPageNo }} of {{ paginator.lastPageNo }}</p>
         <button @click="next">►</button>
     </div>
 </template>
