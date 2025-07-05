@@ -3,7 +3,7 @@ import type SelectionSettings from '@/interfaces/SelectionSettings';
 import type QuerySettings from '@/interfaces/QuerySettings';
 import type DataPaginator from '@/interfaces/DataPaginator';
 
-export default interface DataDeckProps {
+interface DataDeckProps {
     data: Record<string, string>[];
     headerMetadata: HeaderMetadata[];
     selection?: Record<string, string>[];
@@ -11,4 +11,6 @@ export default interface DataDeckProps {
     querySettings?: QuerySettings;
     paginator?: DataPaginator;
     loading?: boolean;
-};
+}
+
+export type { DataDeckProps as default };

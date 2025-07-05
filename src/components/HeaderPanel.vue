@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import type HeaderMetadata from '@/interfaces/HeaderMetadata';
 import type QuerySettings from '@/interfaces/QuerySettings';
 
@@ -7,6 +8,8 @@ const props = withDefaults(defineProps<{
     headerMetadata: HeaderMetadata[];
 }>(), {
 });
+
+const modelValue = ref(props.modelValue);
 </script>
 
 

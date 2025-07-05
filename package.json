@@ -1,17 +1,21 @@
 {
 	"name": "data-deck",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"description": "An extensible and data-driven component for Vue, designed to display data in both table and card formats.",
 	"repository": "git@github.com:RyanJP18/data-deck.git",
 	"author": "RyanJP18 <contact@ryanjp.co.uk>",
 	"license": "GPL 2.0",
 	"private": true,
 	"type": "module",
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"main": "dist/index.js",
 	"module": "dist/index.es.js",
 	"types": "dist/index.d.ts",
-	"publishConfig": { "access": "public" },
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc && vite build --mode=production && yarn run types",
