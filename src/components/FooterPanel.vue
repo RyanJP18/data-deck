@@ -39,7 +39,7 @@ const pageRange = computed(() => {
 
     // Build up array of displayed values
     const pages = [] as string[];
-    if (start > 1) pages.push('1')
+    if (start > 1) pages.push('1');
     if (start > 2) pages.push('...');
     for (let i = start; i <= end; i++) pages.push(i.toString());
     if (paginator.value.lastPageNo > end + 1) pages.push('...');

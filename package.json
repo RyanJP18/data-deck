@@ -4,7 +4,7 @@
 	"description": "An extensible and data-driven component for Vue, designed to display data in both table and card formats.",
 	"repository": "git@github.com:RyanJP18/data-deck.git",
 	"author": "RyanJP18 <contact@ryanjp.co.uk>",
-	"license": "GPL 2.0",
+	"license": "MIT",
 	"private": true,
 	"type": "module",
 	"files": [
