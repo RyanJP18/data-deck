@@ -9,6 +9,7 @@ const useDataDeck = (
     headerMetadata: HeaderMetadata[], 
     selectionSettings: SelectionSettings,
     selection: Ref<Record<string, string>[]>, 
+    clicked: Ref<Record<string, string> | null>,
     querySettings: Ref<QuerySettings>,
     paginator: Ref<DataPaginator>) => {
 
@@ -23,23 +24,22 @@ const useDataDeck = (
             return;
         }
 
-        if (selectionSettings.fireAndForget) {
-            selection.value.push(item);
-            return;
-        }
+        if (!selectionSettings.fireAndForget) {
+            const selectedIdx = selection.value.indexOf(item);
+            const alreadySelected = selectedIdx > -1;
 
-        const selectedIdx = selection.value.indexOf(item);
-        const alreadySelected = selectedIdx > -1;
+            if (!alreadySelected) {
+                if (!selectionSettings.allowMultiple) {
+                    selection.value.splice(0, 1);
+                }
 
-        if (!alreadySelected) {
-            if (!selectionSettings.allowMultiple) {
-                selection.value.splice(0, 1);
+                selection.value.push(item);
+            } else {
+                selection.value.splice(selectedIdx, 1);
             }
-
-            selection.value.push(item);
-        } else {
-            selection.value.splice(selectedIdx, 1);
         }
+
+        clicked.value = item;
     };
     // ---
 

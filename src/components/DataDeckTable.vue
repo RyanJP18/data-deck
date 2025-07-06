@@ -21,19 +21,30 @@ const props = withDefaults(defineProps<DataDeckProps>(), {
 const emit = defineEmits(['selected', 'deselected']);
 
 
+const clicked = ref<Record<string, string> | null>(null);
 const selection = ref(props.selection);
-watch(selection, () => {
-    if (props.selectionSettings.fireAndForget) {
-        emit('selected', selection.value);
-    } else {
+let clickFlush = false;
 
+watch(clicked, () => {
+    if (clickFlush) {
+        clickFlush = false;
+        return;
     }
+
+    if (props.selectionSettings.fireAndForget || (clicked.value && selection.value.indexOf(clicked.value) > -1)) {
+        emit('selected', clicked.value, selection.value);
+    } else {
+        emit('deselected', clicked.value, selection.value);
+    }
+
+    clickFlush = true; 
+    clicked.value = null;
 }, { deep: true });
 
 const querySettings = ref(props.querySettings);
 const paginator = ref(props.paginator);
 
-const { processedData, pageData, select } = useDataDeck(props.data, props.headerMetadata, props.selectionSettings, selection, querySettings, paginator);
+const { processedData, pageData, select } = useDataDeck(props.data, props.headerMetadata, props.selectionSettings, selection, clicked, querySettings, paginator);
 </script>
 
 
