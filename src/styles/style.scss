@@ -9,6 +9,7 @@ button {
     border: 0;
     background-color: unset;
     color: unset;
+    font-size: inherit;
 
 	&:focus {
 		outline: none;
@@ -16,11 +17,7 @@ button {
 	}
 }
 
-input, textarea {
+input, textarea, select, tr {
     outline: none;
     border: 0;
-}
-
-tr {
-    outline: none;
 }

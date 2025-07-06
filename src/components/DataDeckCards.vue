@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<DataDeckProps>(), {
     selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
     selection: () => [] as Record<string, string>[],
     querySettings: () => ({ filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
-    paginator: () => ({ itemsPerPage: 20, currentPageNo: 1, manager: 'client' }) as DataPaginator,
+    paginator: () => ({ itemsPerPage: 12, currentPageNo: 1, manager: 'client' }) as DataPaginator,
     loading: false,
 });
 
@@ -49,7 +49,11 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 <template>
     <div class="ddc">
         <HeaderPanel v-model="querySettings" :headerMetadata="headerMetadata" />
-        <div class="ddc_deck">
+        <TransitionGroup
+            tag="div"
+            class="ddc_deck"
+            name="pop"
+            appear>
             <div
                 class="ddc_deck_card"
                 :class="selection.indexOf(card) > -1 ? 'selected' : ''"
@@ -58,10 +62,10 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                 tabindex="0"
                 @click="select(card)"
                 @keydown.enter.stop="select(card)">
-                <slot v-if="$slots.default" /> 
+                <slot v-if="$slots.default" :card="card" /> 
                 <div class="ddc_deck_card_row" v-else v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
             </div>
-        </div>
+        </TransitionGroup>
         <FooterPanel v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
     </div>
 </template>
@@ -96,6 +100,32 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     margin-top: 12px;
                 }
             }
+        }
+    }
+}
+
+
+/* Transitions */
+.pop {
+    &-enter {
+        &-active {
+            transition: all 0.3s $smooth-ease-out;
+        }
+
+        &-from {
+            transform: scale(0.7);
+            opacity: 0;
+        }
+    }
+
+    &-leave {
+        &-active {
+            transition: all 0.3s $smooth-ease-in;
+        }
+
+        &-to {
+            transform: scale(0.7);
+            opacity: 0;
         }
     }
 }

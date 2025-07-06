@@ -22,11 +22,11 @@ const modelValue = ref(props.modelValue);
         </div>
         <div class="hp_sort">
             <select v-model="modelValue.sortColumn">
+                <option value="" selected disabled hidden>Sort by...</option>
                 <option v-for="header in props.headerMetadata" :value="header.value" :key="header.value">{{ header.label }}</option>
             </select>
             <select v-model="modelValue.sortDirection">
-                <option>A-Z
-                </option>
+                <option>A-Z</option>
                 <option>Z-A</option>
             </select>
         </div>

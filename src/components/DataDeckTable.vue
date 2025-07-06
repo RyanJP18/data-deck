@@ -51,21 +51,24 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
         <HeaderPanel v-model="querySettings" :headerMetadata="headerMetadata" />
         <table class="ddt_table">
             <thead>
-                <tr>
+                <TransitionGroup tag="tr" name="zoom-fade" appear>
                     <th v-for="header in headerMetadata" :key="header.value"><b>{{ header.label }}</b></th>
-                </tr>
+                </TransitionGroup>
             </thead>
             <tbody>
-                <tr
+                <TransitionGroup 
+                    tag="tr"
+                    name="pop" 
+                    appear
                     :class="selection.indexOf(row) > -1 ? 'selected' : ''"
                     v-for="(row, rowIndex) in pageData"
                     :key="rowIndex"
                     tabindex="0"
                     @click="select(row)"
                     @keydown.enter.stop="select(row)">
-                    <slot v-if="$slots.default" /> 
+                    <slot v-if="$slots.default" :row="row" /> 
                     <td v-else v-for="column in headerMetadata" :key="column.value">{{ row[column.value] }}</td>
-                </tr>
+                </TransitionGroup>
             </tbody>
         </table>
         <FooterPanel v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
@@ -73,7 +76,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 </template>
 
 
-<style scoped lang="scss">
+<style lang="scss">
 .ddt {
     &_table {
         width: 100%;
@@ -119,6 +122,32 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     background-color: #cccccc;
                 }
             }
+        }
+    }
+}
+
+
+/* Transitions */
+.pop {
+    &-enter {
+        &-active {
+            transition: all 0.3s $smooth-ease-out;
+        }
+
+        &-from {
+            transform: scale(0.7);
+            opacity: 0;
+        }
+    }
+
+    &-leave {
+        &-active {
+            transition: all 0.3s $smooth-ease-in;
+        }
+
+        &-to {
+            transform: scale(0.7);
+            opacity: 0;
         }
     }
 }
