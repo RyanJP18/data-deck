@@ -31,31 +31,19 @@ const pageRange = computed(() => {
         return [];
     }
 
-    const pages = [] as string[];
-    
+    // Set up a carousel of clickable pages, e.g. 1 ... 3 4 5 6 7 [8] 9 10 11 12 13 .. 24  
+
+    // Determine start and end points
     const start = Math.max(1, paginator.value.currentPageNo - rangeLimit);
     const end = Math.min(paginator.value.lastPageNo, paginator.value.currentPageNo + rangeLimit);
 
-
-    if (start >= rangeLimit - 1) {
-        pages.push('1')
-    }
-
-    if (start >= rangeLimit) {
-        pages.push('...');
-    }
-
-    for (let i = start; i <= end; i++) {
-        pages.push(i.toString());
-    }
-    
-    if (paginator.value.lastPageNo > end + 1) {
-        pages.push('...');
-    }
-
-    if (paginator.value.lastPageNo > end) {
-        pages.push(paginator.value.lastPageNo.toString());
-    }
+    // Build up array of displayed values
+    const pages = [] as string[];
+    if (start > 1) pages.push('1')
+    if (start > 2) pages.push('...');
+    for (let i = start; i <= end; i++) pages.push(i.toString());
+    if (paginator.value.lastPageNo > end + 1) pages.push('...');
+    if (paginator.value.lastPageNo > end) pages.push(paginator.value.lastPageNo.toString());
     
     return pages;
 });

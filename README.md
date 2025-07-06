@@ -1,5 +1,5 @@
 # About
-An extensible and data-driven component for Vue, written in TypeScript, designed to display data in both table and card formats.
+An extensible and data-driven set of components for Vue, written in TypeScript, designed to display data in both table and card formats.
 
 # Installation
 Simply add data-deck to your project via your chosen package manager.
