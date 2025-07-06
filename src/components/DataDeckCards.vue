@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<DataDeckProps>(), {
     selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
     selection: () => [] as Record<string, string>[],
     querySettings: () => ({ filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
-    paginator: () => ({ itemsPerPage: 20, currentPageNo: 1, manager: 'client' }) as DataPaginator,
+    paginator: () => ({ itemsPerPage: 10, currentPageNo: 1, manager: 'client' }) as DataPaginator,
     loading: false,
 });
 
@@ -49,15 +49,18 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 <template>
     <div class="ddc">
         <HeaderPanel v-model="querySettings" :headerMetadata="headerMetadata" />
-        <div
-            class="ddc_deck"
-            v-for="(card, cardIndex) in pageData"
-            :key="cardIndex"
-            tabindex="0"
-            @click="select(card)"
-            @keydown.enter.stop="select(card)">
-            <slot v-if="$slots.default" /> 
-            <div v-else v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
+        <div class="ddc_deck">
+            <div
+                class="ddc_deck_card"
+                :class="selection.indexOf(card) > -1 ? 'selected' : ''"
+                v-for="(card, cardIndex) in pageData"
+                :key="cardIndex"
+                tabindex="0"
+                @click="select(card)"
+                @keydown.enter.stop="select(card)">
+                <slot v-if="$slots.default" /> 
+                <div class="ddc_deck_card_row" v-else v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
+            </div>
         </div>
         <FooterPanel v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
     </div>
@@ -66,9 +69,34 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 
 <style scoped lang="scss">
 .ddc {
-    &_deck{
+    &_deck {
+        display: flex;
         flex-wrap: wrap;
+        gap: 12px;
 
+        &_card{
+            width: 260px;
+            overflow: hidden;
+            padding: 12px 20px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            @include transition-hover;
+
+            &:hover, &:focus-visible {
+                background-color: #cccccc;
+                outline: 0;
+            }
+
+            &.selected {
+                background-color: #cccccc;
+            }
+
+            &_row {
+                & + & {
+                    margin-top: 12px;
+                }
+            }
+        }
     }
 }
 </style>

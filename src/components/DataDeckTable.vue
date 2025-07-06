@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<DataDeckProps>(), {
     selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
     selection: () => [] as Record<string, string>[],
     querySettings: () => ({ filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
-    paginator: () => ({ itemsPerPage: 20, currentPageNo: 1, manager: 'client' }) as DataPaginator,
+    paginator: () => ({ itemsPerPage: 10, currentPageNo: 1, manager: 'client' }) as DataPaginator,
     loading: false,
 });
 
@@ -57,6 +57,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
             </thead>
             <tbody>
                 <tr
+                    :class="selection.indexOf(row) > -1 ? 'selected' : ''"
                     v-for="(row, rowIndex) in pageData"
                     :key="rowIndex"
                     tabindex="0"

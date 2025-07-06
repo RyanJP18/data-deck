@@ -58,7 +58,7 @@ const useDataDeck = (
     // Apply filter
     const filteredData = computed(() => 
         data.filter(item => filterWhitelist.value.map(key => item[key]) // get any fields from the data that are in our filter keys
-            .some(value => value.toLowerCase().includes(processedFilterQuery.value)))); // do a comparison against the filter
+            .some(value => value.toString().toLowerCase().includes(processedFilterQuery.value)))); // do a comparison against the filter
     // ---
 
 

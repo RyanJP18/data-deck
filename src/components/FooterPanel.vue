@@ -25,23 +25,35 @@ watch(() => props.processedData, () => {
     emit('update:modelValue', paginator.value);
 }, { deep: true, immediate: true });
 
-const rangeLimit = 10;
+const rangeLimit = 5;
 const pageRange = computed(() => {
     if (!paginator.value.lastPageNo) {
         return [];
     }
 
     const pages = [] as string[];
-
-    for (let i = 1; i <= Math.min(rangeLimit, paginator.value.lastPageNo); i++) {
-        pages.push(i.toString());
-    }
     
-    if (paginator.value.lastPageNo > rangeLimit + 1) {
+    const start = Math.max(1, paginator.value.currentPageNo - rangeLimit);
+    const end = Math.min(paginator.value.lastPageNo, paginator.value.currentPageNo + rangeLimit);
+
+
+    if (start >= rangeLimit - 1) {
+        pages.push('1')
+    }
+
+    if (start >= rangeLimit) {
         pages.push('...');
     }
 
-    if (paginator.value.lastPageNo > rangeLimit) {
+    for (let i = start; i <= end; i++) {
+        pages.push(i.toString());
+    }
+    
+    if (paginator.value.lastPageNo > end + 1) {
+        pages.push('...');
+    }
+
+    if (paginator.value.lastPageNo > end) {
         pages.push(paginator.value.lastPageNo.toString());
     }
     
@@ -67,7 +79,7 @@ const next = () => {
 };
 
 const choose = (page: number) => {
-    if (!paginator.value.lastPageNo || paginator.value.currentPageNo === page || page < 1 || page > paginator.value.lastPageNo) {
+    if (Number.isNaN(page) || !paginator.value.lastPageNo || paginator.value.currentPageNo === page || page < 1 || page > paginator.value.lastPageNo) {
         return;
     }
     
@@ -104,7 +116,7 @@ const choose = (page: number) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 28px;
+    height: 36px;
 
     & > button {
         display: flex;
