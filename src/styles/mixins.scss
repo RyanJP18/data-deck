@@ -1,0 +1,14 @@
+@mixin truncate-ellipses {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+$smooth-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$smooth-ease-in: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+$smooth-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+@mixin transition-hover {
+    cursor: pointer;
+    transition: background-color 0.25s $smooth-ease-out, color 0.25s $smooth-ease-out;
+}

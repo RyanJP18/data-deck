@@ -1,7 +1,7 @@
 interface DataPaginator {
     itemsPerPage: number;
     currentPageNo: number;
-    lastPageNo: number;
+    lastPageNo?: number; // Server-managed only
     manager: 'client' | 'server';
 }
 

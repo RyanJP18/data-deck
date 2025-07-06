@@ -14,7 +14,9 @@ export default defineConfig(() => {
             preprocessorOptions: {
                 scss: {
                     api: 'modern-compiler',
-                    additionalData: ''
+                    additionalData: `
+                        @use '@/styles/mixins.scss' as *;
+                    `
                 }
             }
         },

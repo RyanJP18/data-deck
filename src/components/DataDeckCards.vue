@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import type DataDeckProps from '@/interfaces/DataDeckProps';
-import type HeaderMetadata from '@/interfaces/HeaderMetadata';
 import type SelectionSettings from '@/interfaces/SelectionSettings';
 import type QuerySettings from '@/interfaces/QuerySettings';
 import type DataPaginator from '@/interfaces/DataPaginator';
@@ -10,11 +9,10 @@ import FooterPanel from '@/components/FooterPanel.vue';
 import HeaderPanel from '@/components/HeaderPanel.vue';
 
 const props = withDefaults(defineProps<DataDeckProps>(), {
-    headerMetadata: () => [] as HeaderMetadata[],
     selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
     selection: () => [] as Record<string, string>[],
     querySettings: () => ({ filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
-    paginator: () => ({ itemsPerPage: 2, currentPageNo: 1, lastPageNo: 1, manager: 'client' }) as DataPaginator,
+    paginator: () => ({ itemsPerPage: 20, currentPageNo: 1, manager: 'client' }) as DataPaginator,
     loading: false,
 });
 
@@ -49,11 +47,28 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 
 
 <template>
-    <div>
+    <div class="ddc">
         <HeaderPanel v-model="querySettings" :headerMetadata="headerMetadata" />
-        <div v-for="(card, cardIndex) in pageData" :key="cardIndex" @click="select(card)">
-            <div v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
+        <div
+            class="ddc_deck"
+            v-for="(card, cardIndex) in pageData"
+            :key="cardIndex"
+            tabindex="0"
+            @click="select(card)"
+            @keydown.enter.stop="select(card)">
+            <slot v-if="$slots.default" /> 
+            <div v-else v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
         </div>
         <FooterPanel v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
     </div>
 </template>
+
+
+<style scoped lang="scss">
+.ddc {
+    &_deck{
+        flex-wrap: wrap;
+
+    }
+}
+</style>
