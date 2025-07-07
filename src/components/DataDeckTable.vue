@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<DataDeckProps>(), {
     selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
     selection: () => [] as Record<string, string>[],
     querySettings: () => ({ showHeader: true, filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
-    paginator: () => ({ pagination: 'none', showFooter: true, itemsPerPage: 20, currentPageNo: 1 }) as DataPaginator,
+    paginator: () => ({ pagination: 'client', showFooter: true, itemsPerPage: 20, currentPageNo: 1 }) as DataPaginator,
     loading: false,
 });
 
@@ -51,8 +51,8 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
         <HeaderPanel v-if="querySettings.showHeader" v-model="querySettings" :headerMetadata="headerMetadata" />
         <table class="ddt_table">
             <thead>
-                <TransitionGroup tag="tr" name="zoom-fade" appear>
-                    <th v-for="header in headerMetadata" :key="header.value"><b>{{ header.label }}</b></th>
+                <TransitionGroup tag="tr" name="pop" appear>
+                    <th v-for="header in headerMetadata" :key="header.value">{{ header.label }}</th>
                 </TransitionGroup>
             </thead>
             <tbody>
@@ -76,7 +76,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 </template>
 
 
-<style lang="scss">
+<style scoped lang="scss">
 .ddt {
     &_table {
         width: 100%;
@@ -92,6 +92,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     vertical-align: middle;
                     text-align: center;
                     @include transition-hover;
+                    font-weight: bold;
 
                     &:hover, &:focus-visible {
                         background-color: #525252;
@@ -122,32 +123,6 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     background-color: #cccccc;
                 }
             }
-        }
-    }
-}
-
-
-/* Transitions */
-.pop {
-    &-enter {
-        &-active {
-            transition: all 0.3s $smooth-ease-out;
-        }
-
-        &-from {
-            transform: scale(0.7);
-            opacity: 0;
-        }
-    }
-
-    &-leave {
-        &-active {
-            transition: all 0.3s $smooth-ease-in;
-        }
-
-        &-to {
-            transform: scale(0.7);
-            opacity: 0;
         }
     }
 }

@@ -10,5 +10,5 @@ $smooth-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 
 @mixin transition-hover {
     cursor: pointer;
-    transition: background-color 0.25s $smooth-ease-out, color 0.25s $smooth-ease-out;
+    transition: background-color 0.3s $smooth-ease-out, color 0.3s $smooth-ease-out;
 }

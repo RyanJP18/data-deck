@@ -85,6 +85,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
             border: 1px solid #cccccc;
             border-radius: 6px;
             @include transition-hover;
+            transition: all 0.3s $smooth-ease-out;
 
             &:hover, &:focus-visible {
                 background-color: #cccccc;
@@ -100,32 +101,6 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     margin-top: 12px;
                 }
             }
-        }
-    }
-}
-
-
-/* Transitions */
-.pop {
-    &-enter {
-        &-active {
-            transition: all 0.3s $smooth-ease-out;
-        }
-
-        &-from {
-            transform: scale(0.7);
-            opacity: 0;
-        }
-    }
-
-    &-leave {
-        &-active {
-            transition: all 0.3s $smooth-ease-in;
-        }
-
-        &-to {
-            transform: scale(0.7);
-            opacity: 0;
         }
     }
 }

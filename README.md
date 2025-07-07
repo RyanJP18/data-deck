@@ -135,10 +135,10 @@ Pagination Settings are optional properties that are used by DataDeck to configu
 
 ``` typescript
 interface DataPaginator {
-   pagination: `none` | 'client' | 'server'; // note: server is not yet fully implemented
+   pagination: `none` | 'client' | 'server'; // default 'client' - note: server is not yet fully tested
    showFooter: boolean; // default true
    itemsPerPage: number; // default 12 for DataDeckCards, 20 for DataDeckTable
-   currentPageNo: number; // default 1
+   currentPageNo: number; // default 1 (reactively bound to the selection in the footer)
    lastPageNo?: number; // default computed on the client at runtime (explicitly set if server-managed only)
 }
 ```

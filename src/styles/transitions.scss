@@ -1,0 +1,23 @@
+.pop {
+    &-enter {
+        &-active {
+            transition: all 0.3s $smooth-ease-out;
+        }
+
+        &-from {
+            transform: scale(0.7);
+            opacity: 0;
+        }
+    }
+
+    &-leave {
+        &-active {
+            transition: all 0.3s $smooth-ease-in;
+        }
+
+        &-to {
+            transform: scale(0.7);
+            opacity: 0;
+        }
+    }
+}
