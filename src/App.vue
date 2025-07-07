@@ -101,6 +101,7 @@ const makeMember = (row: Record<string, string>) => {
 
 <style scoped lang="scss">
 .app {
+    font-family: sans-serif;
     height: 100vh;
     width: 804px;
     display: flex;
