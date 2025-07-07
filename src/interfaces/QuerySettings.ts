@@ -1,4 +1,5 @@
 interface QuerySettings {
+    showHeader: boolean;
     filterQuery: string;
     sortColumn: string;
     sortDirection: string;

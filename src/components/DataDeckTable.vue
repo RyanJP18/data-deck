@@ -11,8 +11,8 @@ import HeaderPanel from '@/components/HeaderPanel.vue';
 const props = withDefaults(defineProps<DataDeckProps>(), {
     selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
     selection: () => [] as Record<string, string>[],
-    querySettings: () => ({ filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
-    paginator: () => ({ itemsPerPage: 20, currentPageNo: 1, manager: 'client' }) as DataPaginator,
+    querySettings: () => ({ showHeader: true, filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
+    paginator: () => ({ pagination: 'none', showFooter: true, itemsPerPage: 20, currentPageNo: 1 }) as DataPaginator,
     loading: false,
 });
 
@@ -48,7 +48,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 
 <template>
     <div class="ddt">
-        <HeaderPanel v-model="querySettings" :headerMetadata="headerMetadata" />
+        <HeaderPanel v-if="querySettings.showHeader" v-model="querySettings" :headerMetadata="headerMetadata" />
         <table class="ddt_table">
             <thead>
                 <TransitionGroup tag="tr" name="zoom-fade" appear>
@@ -71,7 +71,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                 </TransitionGroup>
             </tbody>
         </table>
-        <FooterPanel v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
+        <FooterPanel v-if="paginator.showFooter && paginator.pagination !== 'none'" v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
     </div>
 </template>
 

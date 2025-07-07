@@ -49,16 +49,15 @@ This will render DataDeck components with default settings and styling.
 ## Configuration
 
 ### Event Handling and Selection Settings
-There are two ways to process DataDeck selections: v-model and event listeners. By default, DataDeck is in `fireAndForget` mode, i.e. selecting cards or table rows will fire the `selection` event, but will not otherwise record the selection.
-
+There are two ways to process DataDeck selections: `v-model` and event listeners. By default, DataDeck is in `fireAndForget` mode, i.e. selecting cards or table rows will fire the `selection` event, but will not otherwise record the selection. In other words, the `v-model` does not update without configuration.
 
 Selection Settings are optional properties that determine how click events are processed and stored by DataDeck.
 
 ``` typescript
 interface SelectionSettings {
-    readOnly: boolean; // default false
-    fireAndForget: boolean; // default true
-    allowMultiple: boolean; // default false
+   readOnly: boolean; // default false
+   fireAndForget: boolean; // default true
+   allowMultiple: boolean; // default false
 }
 ```
 
@@ -118,14 +117,38 @@ If `fireAndForget` is `false` and `allowMultiple` is `true`, the `selection` and
 ```
 
 ### Query Settings
+Query Settings are optional properties that determine the filtering and sort applied by DataDeck.
+
+``` typescript
+interface QuerySettings {
+   showHeader: boolean; // default true
+   filterQuery: string; // default '' (bound reactively to the filter input in the header)
+   sortColumn: string; // default '' (bound reactively to the sortColumn dropdown in the header)
+   sortDirection: string; // default 'A-Z` (bound reactively to the sortDirection dropdown in the header)
+}
+```
+
+By default, `showHeader` is `true`, meaning a basic header element with a filter field and sort dropdowns is placed above DataDeck. To override this functionality explicitly, `showHeader` should be set to `false` and the other interface values should be overridden with desired values. Note that if reactive values are supplied using vue `ref`s, DataDeck will respond to changes on the fly.
 
 ### Pagination Settings
+Pagination Settings are optional properties that are used by DataDeck to configure the paginator.
 
+``` typescript
+interface DataPaginator {
+   pagination: `none` | 'client' | 'server'; // note: server is not yet fully implemented
+   showFooter: boolean; // default true
+   itemsPerPage: number; // default 12 for DataDeckCards, 20 for DataDeckTable
+   currentPageNo: number; // default 1
+   lastPageNo?: number; // default computed on the client at runtime (explicitly set if server-managed only)
+}
+```
 
+By default, `pagination` is managed `client`-side. Pagination can be disabled entirely by setting `pagination` to `none`. This essentially causes all data provided to DataDeck to be shown in one page. Provided pagination is enabled in some capacity, DataDeck provides a basic pagination footer element if `showFooter` is `true`. Additionally, `itemsPerPage` and `currentPageNo` can be adjusted as desired.
 
-
+If `pagination` is set to `server`, DataDeck will expect these fields to be updated through API calls and therefore no longer update them internally. 
 
 ## Layout Customisation
+Work in progress
 
 # Examples
 See [docs/examples.md](docs/examples.md).

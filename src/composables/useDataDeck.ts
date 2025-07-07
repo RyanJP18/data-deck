@@ -96,6 +96,10 @@ const useDataDeck = (
     // Pagination logic
     // ---
     const pageData = computed(() => {
+        if (paginator.value.pagination === 'none') {
+            return processedData.value;
+        }
+
         const start = (currentPageNo.value - 1) * itemsPerPage.value;
         const end = start + itemsPerPage.value;
         return processedData.value.slice(start, end);

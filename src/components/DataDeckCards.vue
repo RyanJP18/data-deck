@@ -11,8 +11,8 @@ import HeaderPanel from '@/components/HeaderPanel.vue';
 const props = withDefaults(defineProps<DataDeckProps>(), {
     selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
     selection: () => [] as Record<string, string>[],
-    querySettings: () => ({ filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
-    paginator: () => ({ itemsPerPage: 12, currentPageNo: 1, manager: 'client' }) as DataPaginator,
+    querySettings: () => ({ showHeader: true, filterQuery: '', sortColumn: '', sortDirection: 'A-Z' }) as QuerySettings,
+    paginator: () => ({ pagination: 'client', showFooter: true, itemsPerPage: 12, currentPageNo: 1 }) as DataPaginator,
     loading: false,
 });
 
@@ -48,7 +48,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 
 <template>
     <div class="ddc">
-        <HeaderPanel v-model="querySettings" :headerMetadata="headerMetadata" />
+        <HeaderPanel v-if="querySettings.showHeader" v-model="querySettings" :headerMetadata="headerMetadata" />
         <TransitionGroup
             tag="div"
             class="ddc_deck"
@@ -66,7 +66,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                 <div class="ddc_deck_card_row" v-else v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
             </div>
         </TransitionGroup>
-        <FooterPanel v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
+        <FooterPanel v-if="paginator.showFooter && paginator.pagination !== 'none'" v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
     </div>
 </template>
 
