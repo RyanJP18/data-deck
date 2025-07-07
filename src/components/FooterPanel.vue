@@ -117,19 +117,19 @@ const choose = (page: number) => {
 
         & > svg {
             height: 18px;
-            margin-left: 4px;
-            margin-right: 4px;
+            margin-left: $spacing-1;
+            margin-right: $spacing-1;
         }
     }
 
     &_carousel {
-        margin-left: 16px;
-        margin-right: 16px;
+        margin-left: $spacing-3;
+        margin-right: $spacing-3;
 
         &_page {
             cursor: pointer; 
             & + & {
-                margin-left: 8px;
+                margin-left: $spacing-2;
             }
 
             &.active {

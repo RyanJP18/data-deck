@@ -23,7 +23,7 @@ const modelValue = ref(props.modelValue);
         <div class="hp_sort">
             <select v-model="modelValue.sortColumn">
                 <option value="" selected disabled hidden>Sort by...</option>
-                <option v-for="header in props.headerMetadata" :value="header.value" :key="header.value">{{ header.label }}</option>
+                <option v-for="header in props.headerMetadata" :value="header.value" :key="header.value">{{ header.label ?? header.value }}</option>
             </select>
             <select v-model="modelValue.sortDirection">
                 <option>A-Z</option>
@@ -37,33 +37,33 @@ const modelValue = ref(props.modelValue);
 <style scoped lang="scss">
 .hp {
     display: flex;
-    margin-bottom: 8px;
+    margin-bottom: $spacing-2;
     justify-content: space-between;
 
     &_filter {
         display: flex;
         align-items: center;
-        padding: 4px;
-        border: 1px solid #cccccc;
-        border-radius: 6px;
+        padding: $spacing-1;
+        border: 1px solid $greyscale-3;
+        border-radius: $rounded;
 
         & > svg {
             height: 18px;
-            color: #cccccc;
-            margin-right: 8px;
+            color: $greyscale-3;
+            margin-right: $spacing-2;
         }
     }
 
     &_sort {
         & > select {
-            padding: 4px;
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
-            border-radius: 6px;
+            padding: $spacing-1;
+            background-color: white;
+            border: 1px solid $greyscale-3;
+            border-radius: $rounded;
 
             &:first-of-type {
                 width: 160px;
-                margin-right: 8px;
+                margin-right: $spacing-2;
             }
         }
     }

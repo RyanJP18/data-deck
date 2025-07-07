@@ -117,7 +117,7 @@ const makeMember = (row: Record<string, string>) => {
 .app {
     font-family: sans-serif;
     height: 100vh;
-    width: 834px;
+    max-width: 1168px;
     display: flex;
     flex-direction: column;
     margin-left: auto;
@@ -125,19 +125,18 @@ const makeMember = (row: Record<string, string>) => {
 
     &_title {
         font-size: 48px;
-        padding: 8px 8px;
+        padding: $spacing-2 $spacing-2;
     }
 
     &_subheading {
         font-size: 32px;
-        padding: 4px 8px;
-        margin-top: 24px;
-        margin-bottom: 12px;
+        padding: $spacing-1 $spacing-2;
+        margin-top: $spacing-4;
+        margin-bottom: $spacing-3;
     }
 
     &_table {
-        color: #011140;
-        font-size: 16px;
+        color: $blues-1;
 
         & :deep(table) {
             border-collapse: separate;
@@ -145,81 +144,91 @@ const makeMember = (row: Record<string, string>) => {
 
             & th {
                 height: 60px;
-                padding: 8px;
-                background-color: #011140;
-                border: 1px solid #011140;
+                padding: $spacing-2;
+                background-color: $blues-1;
+                border: 1px solid $blues-1;
+                color: white;
             }
 
             & tbody > tr {
                 &:hover td {
-                    background-color: #eeeeee;
+                    background-color: $greyscale-4;
                 }
             }
             
         }
 
         &_row {
-            border-top: 1px solid #eeeeee;
-            border-bottom: 1px solid #eeeeee;
+            border-top: 1px solid $greyscale-4;
+            border-bottom: 1px solid $greyscale-4;
             height: 48px;
-            background-color: #ffffff;
+            background-color: white;
             text-align: center; 
 
             & > button {
-                border-radius: 6px;
-                background-color: #1E6FD9;
-                color: #ffffff;
+                border-radius: $rounded;
+                background-color: $blues-2;
+                color: white;
                 width: 160px;
-                padding: 8px;
+                padding: $spacing-2;
                 @include transition-hover;
 
                 &:hover {
-                    background-color: #389BF2;
+                    background-color: $blues-3;
                 }
             }
             
             &:first-of-type {
                 display: flex;
                 align-items: center;
-                border-left: 1px solid #eeeeee;
-                background-color: #eeeeee; 
+                border-left: 1px solid $greyscale-4;
+                background-color: $greyscale-4; 
                 text-align: left; 
-                padding-left: 16px;
+                padding-left: $spacing-3;
                 font-size: 20px;
 
                 & > p + p {
-                    margin-left: 4px;
+                    margin-left: $spacing-1;
                     font-weight: bold;
                 } 
             }
 
             &:last-of-type {
-                border-right: 1px solid #eeeeee;
+                border-right: 1px solid $greyscale-4;
             }
         }
     }
 
     &_deck {
-        width: 984px;
-        
+        color: $blues-1;
+        width: 992px;
+        margin-left: auto;
+        margin-right: auto;
+
         &_card {
             width: 320px;
             overflow: hidden;
-            padding: 16px;
-            border: 1px solid #cccccc;
-            border-radius: 6px;
+            padding: $spacing-3;
+            border: 1px solid $greyscale-3;
+            border-radius: $rounded;
             @include transition-hover;
             transition: all 0.3s $smooth-ease-out;
+
+            &:hover, &:focus-visible {
+                background-color: $blues-4;
+                color: white;
+                outline: 0;
+            }
             
             &_header {
                 font-size: 24px;
                 display: flex;
-                padding-bottom: 8px;
-                border-bottom: 1px solid #cccccc;
-                margin-bottom: 24px;
+                padding-bottom: $spacing-2;
+                border-bottom: 1px solid $greyscale-3;
+                margin-bottom: $spacing-4;
 
                 & > p + p {
-                    margin-left: 4px;
+                    margin-left: $spacing-1;
                     font-weight: bold;
                 } 
             }
@@ -228,7 +237,7 @@ const makeMember = (row: Record<string, string>) => {
                 & > div {
                     display: flex;
                     justify-content: space-between;
-                    margin: 8px 0;
+                    margin: $spacing-2 0;
 
                     & > p:first-of-type {
                         font-weight: bold;
@@ -236,16 +245,16 @@ const makeMember = (row: Record<string, string>) => {
                 }
 
                 & > button {
-                    border-radius: 6px;
-                    background-color: #1E6FD9;
-                    color: #ffffff;
+                    border-radius: $rounded;
+                    background-color: $blues-2;
+                    color: white;
                     width: 100%;
-                    padding: 8px;
-                    margin-top: 16px;
+                    padding: $spacing-2;
+                    margin-top: $spacing-3;
                     @include transition-hover;
 
                     &:hover {
-                        background-color: #389BF2;
+                        background-color: $blues-3;
                     }
                 }
             }

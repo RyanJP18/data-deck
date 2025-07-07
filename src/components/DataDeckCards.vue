@@ -69,7 +69,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     @click="select(card)"
                     @keydown.enter.stop="select(card)"
                 >
-                    <div class="ddc_deck_card_row" v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
+                    <div class="ddc_deck_card_row" v-for="column in headerMetadata" :key="column.value"><b>{{ column.label ?? column.value }}</b>: {{ card[column.value] }} </div>
                 </div>
             </div>
         </TransitionGroup>
@@ -83,29 +83,29 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
     &_deck {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: $spacing-3;
 
         &_card{
-            width: 270px;
+            width: 280px;
             overflow: hidden;
-            padding: 12px 20px;
-            border: 1px solid #cccccc;
-            border-radius: 6px;
+            padding: $spacing-3;
+            border: 1px solid $greyscale-3;
+            border-radius: $rounded;
             @include transition-hover;
             transition: all 0.3s $smooth-ease-out;
 
             &:hover, &:focus-visible {
-                background-color: #cccccc;
+                background-color: $greyscale-3;
                 outline: 0;
             }
 
             &.selected {
-                background-color: #cccccc;
+                background-color: $greyscale-3;
             }
 
             &_row {
                 & + & {
-                    margin-top: 12px;
+                    margin-top: $spacing-2;
                 }
             }
         }

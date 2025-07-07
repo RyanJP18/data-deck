@@ -52,7 +52,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
         <table class="ddt_table">
             <thead>
                 <TransitionGroup tag="tr" name="pop" appear>
-                    <th v-for="header in headerMetadata" :key="header.value">{{ header.label }}</th>
+                    <th v-for="header in headerMetadata" :key="header.value">{{ header.label ?? header.value }}</th>
                 </TransitionGroup>
             </thead>
             <tbody>
@@ -85,8 +85,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
         & > thead {
             & > tr {
                 height: 36px;
-                background-color: #3b3b3b;
-                color: #ffffff;
+                border-bottom: 1px solid $greyscale-3;
 
                 & > th {
                     vertical-align: middle;
@@ -95,7 +94,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     font-weight: bold;
 
                     &:hover, &:focus-visible {
-                        background-color: #525252;
+                        background-color: $greyscale-2;
                     }
                 }
             }
@@ -103,11 +102,11 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 
         & > tbody { 
             & > tr {
-                height: 28px;
+                height: 32px;
                 @include transition-hover;
 
                 &:nth-child(even) {
-                    background-color: #eeeeee;
+                    background-color: $greyscale-4;
                 }
 
                 & > td {
@@ -116,11 +115,11 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                 }
 
                 &:hover td, &:focus-visible td {
-                    background-color: #cccccc;
+                    background-color: $greyscale-3;
                 }
 
                 &.selected td {
-                    background-color: #cccccc;
+                    background-color: $greyscale-3;
                 }
             }
         }

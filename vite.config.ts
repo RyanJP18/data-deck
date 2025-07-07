@@ -15,6 +15,8 @@ export default defineConfig(() => {
                 scss: {
                     api: 'modern-compiler',
                     additionalData: `
+                        @use '@/styles/sizings.scss' as *;
+                        @use '@/styles/colors.scss' as *;
                         @use '@/styles/mixins.scss' as *;
                     `
                 }
