@@ -69,15 +69,15 @@ const makeMember = (row: Record<string, string>) => {
         <p class="app_subheading">This is a custom layout table:</p>
         <DataDeckTable :header-metadata="metadataCustom" :data="gymData" class="app_table">
             <template #default="{ row }">
-                <td>
+                <td class="app_table_row name">
                     <p>{{ row.name.split(' ')[0] }}</p>
                     <p>{{ row.name.split(' ')[1] }}</p>
                 </td>
-                <td>{{ row.age }} {{ row.gender[0] }}</td> 
-                <td>
+                <td class="app_table_row">{{ row.age }} {{ row.gender[0] }}</td> 
+                <td class="app_table_row">
                     <button @click="callMember(row)">Call {{ row.mob }}</button>
                 </td> 
-                <td>
+                <td class="app_table_row">
                     <input type="checkbox" :checked="row.membership_status === 'Active'" @click="makeMember(row)" />
                 </td> 
             </template>
@@ -122,72 +122,65 @@ const makeMember = (row: Record<string, string>) => {
     }
 
     &_table {
+        color: #011140;
+        font-size: 16px;
+
         & :deep(table) {
             border-collapse: separate;
             border-spacing: 0 6px;
-            color: #011140;
-            font-size: 16px;
 
             & th {
+                height: 60px;
+                padding: 8px;
                 background-color: #011140;
                 border: 1px solid #011140;
-
-                &:first-child {
-                    border-top-left-radius: 6px;
-                    border-bottom-left-radius: 6px;
-                }
-
-                &:last-child {
-                    border-top-right-radius: 6px;
-                    border-bottom-right-radius: 6px;
-                }
             }
 
             & tbody > tr {
-                @include transition-hover;
-
                 &:hover td {
                     background-color: #eeeeee;
                 }
+            }
+            
+        }
 
-                & td {
-                    border-top: 1px solid #eeeeee;
-                    border-bottom: 1px solid #eeeeee;
-                    height: 48px;
-                    background-color: #ffffff;
+        &_row {
+            border-top: 1px solid #eeeeee;
+            border-bottom: 1px solid #eeeeee;
+            height: 48px;
+            background-color: #ffffff;
+            text-align: center; 
 
-                    & button {
-                        border-radius: 6px;
-                        background-color: #1E6FD9;
-                        color: #ffffff;
-                        width: 160px;
-                        padding: 8px;
-                        @include transition-hover;
+            & > button {
+                border-radius: 6px;
+                background-color: #1E6FD9;
+                color: #ffffff;
+                width: 160px;
+                padding: 8px;
+                @include transition-hover;
 
-                        &:hover {
-                            background-color: #389BF2;
-                        }
-                    }
-                    
-                    &:first-of-type {
-                        display: flex;
-                        align-items: center;
-                        border-left: 1px solid #eeeeee;
-                        background-color: #eeeeee; 
-                        text-align: left; 
-                        padding-left: 16px;
-                        font-size: 20px;
-
-                        & > p + p {
-                            margin-left: 4px;
-                            font-weight: bold;
-                        } 
-                    }
-
-                    &:last-of-type {
-                        border-right: 1px solid #eeeeee;
-                    }
+                &:hover {
+                    background-color: #389BF2;
                 }
+            }
+            
+            &:first-of-type {
+                display: flex;
+                align-items: center;
+                border-left: 1px solid #eeeeee;
+                background-color: #eeeeee; 
+                text-align: left; 
+                padding-left: 16px;
+                font-size: 20px;
+
+                & > p + p {
+                    margin-left: 4px;
+                    font-weight: bold;
+                } 
+            }
+
+            &:last-of-type {
+                border-right: 1px solid #eeeeee;
             }
         }
     }

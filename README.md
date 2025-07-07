@@ -2,6 +2,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
   - [Configuration](#configuration)
+    - [Data Mappings](#data-mappings)
     - [Event Handling and Selection Settings](#event-handling-and-selection-settings)
     - [Query Settings](#query-settings)
     - [Pagination Settings](#pagination-settings)
@@ -47,6 +48,23 @@ The two primary components exported by this package are: DataDeckTable for table
 This will render DataDeck components with default settings and styling.
 
 ## Configuration
+
+### Data Mappings
+It is a common use case for data to be displayed, filtered or sorted differently to its raw form. These relationships can be defined in HeaderMetadata.
+
+``` typescript
+interface HeaderMetadata {
+   value: string; // Required. The field containing the data for this column, e.g. dob (as in, data.dob)
+   label: string; // Required. The header label to be used for this column, e.g. 'Date of Birth'
+   sortMapping?: string; // Optional. The field used to sort this column, e.g. we might want dob to invisibly use dob_timedate for sorting
+   filterMapping?: string; // Optional. The field used to filter this column, e.g. we might want forename to invisibly use full_name for filtering
+   useInFilter?: boolean; // Optional. Whether this field should be considered by the filter, default true
+}
+```
+
+By default, only the value and label are required to display data. When displaying the data, DataDeck simply looks up the corresponding label for the provided value for use in a column header. 
+
+`useInFilter` determines whether the value field corresponding to each record in this column is used against filter strings. `filterMapping` further allows a different field (as opposed to the value field) to be used in this filter. Finally, `sortMapping` allows a different field (as opposed to the value field) to be used to sort the column. Note that in both of the mapping cases, the field in question does not need to be a displayed field.
 
 ### Event Handling and Selection Settings
 There are two ways to process DataDeck selections: `v-model` and event listeners. By default, DataDeck is in `fireAndForget` mode, i.e. selecting cards or table rows will fire the `selection` event, but will not otherwise record the selection. In other words, the `v-model` does not update without configuration.

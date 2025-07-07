@@ -52,7 +52,7 @@ const useDataDeck = (
     // Determine which columns are whitelisted for use in filtering
     const filterWhitelist = computed(() => headerMetadata
         .filter(metadata => metadata.useInFilter ?? true)
-        .map(metadata => metadata.value)
+        .map(metadata => metadata.filterMapping ?? metadata.value)
     );
 
     // Apply filter
