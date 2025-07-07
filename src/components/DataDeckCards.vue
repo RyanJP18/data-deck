@@ -79,7 +79,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
         gap: 12px;
 
         &_card{
-            width: 260px;
+            width: 270px;
             overflow: hidden;
             padding: 12px 20px;
             border: 1px solid #cccccc;

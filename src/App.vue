@@ -87,11 +87,25 @@ const makeMember = (row: Record<string, string>) => {
         <DataDeckCards :header-metadata="metadata" :data="gymData" class="app_deck">
             <template #default="{ card }">
                 <div class="app_deck_card">
-                    <p>{{ card.name.split(' ')[0] }}</p>
-                    <p>{{ card.name.split(' ')[1] }}</p>
-                    <p>{{ card.age }} {{ card.gender[0] }}</p> 
-                    <button @click="callMember(card)">Call {{ card.mob }}</button>
-                    <input type="checkbox" :checked="card.membership_status === 'Active'" @click="makeMember(card)" />
+                    <div class="app_deck_card_header">
+                        <p>{{ card.name.split(' ')[0] }}</p>
+                        <p>{{ card.name.split(' ')[1] }}</p>
+                    </div>
+                    <div class="app_deck_card_body">
+                        <div>
+                            <p>Bio</p>
+                            <p>{{ card.age }} {{ card.gender[0] }}</p>
+                        </div>
+                        <div>
+                            <p>Contact</p>
+                            <p>{{ card.mob }}</p>
+                        </div>
+                        <div> 
+                            <p>Membership</p>
+                            <input type="checkbox" :checked="card.membership_status === 'Active'" @click="makeMember(card)" />
+                        </div>
+                        <button @click="callMember(card)">Contact</button>  
+                    </div>
                 </div> 
             </template>
         </DataDeckCards>
@@ -103,7 +117,7 @@ const makeMember = (row: Record<string, string>) => {
 .app {
     font-family: sans-serif;
     height: 100vh;
-    width: 804px;
+    width: 834px;
     display: flex;
     flex-direction: column;
     margin-left: auto;
@@ -186,16 +200,44 @@ const makeMember = (row: Record<string, string>) => {
     }
 
     &_deck {
-        & button {
-            border-radius: 6px;
-            background-color: #1E6FD9;
-            color: #ffffff;
-            width: 160px;
-            padding: 8px;
-            @include transition-hover;
+        &_card {
+            &_header {
+                font-size: 24px;
+                display: flex;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #cccccc;
+                margin-bottom: 24px;
 
-            &:hover {
-                background-color: #389BF2;
+                & > p + p {
+                    margin-left: 4px;
+                    font-weight: bold;
+                } 
+            }
+
+            &_body {
+                & > div {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 4px 0;
+
+                    & > p:first-of-type {
+                        font-weight: bold;
+                    }
+                }
+
+                & > button {
+                    border-radius: 6px;
+                    background-color: #1E6FD9;
+                    color: #ffffff;
+                    width: 100%;
+                    padding: 8px;
+                    margin-top: 16px;
+                    @include transition-hover;
+
+                    &:hover {
+                        background-color: #389BF2;
+                    }
+                }
             }
         }
     }
