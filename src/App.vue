@@ -45,6 +45,9 @@ const metadataCustom = [
     { value: 'membership_status', label: 'Active?' },
 ];
 
+const paginatorCustomTable = { pagination: 'client', showFooter: true, itemsPerPage: 12, currentPageNo: 1 }; 
+const paginatorCustomCards = { pagination: 'client', showFooter: true, itemsPerPage: 9, currentPageNo: 1 }; 
+
 const callMember = (row: Record<string, string>) => {
     alert('Calling ' + row.name + ' on ' + row.mob + '...');
 };
@@ -67,7 +70,7 @@ const makeMember = (row: Record<string, string>) => {
         <DataDeckCards :header-metadata="metadata" :data="gymData" />
 
         <p class="app_subheading">This is a custom layout table:</p>
-        <DataDeckTable :header-metadata="metadataCustom" :data="gymData" class="app_table">
+        <DataDeckTable :header-metadata="metadataCustom" :data="gymData" :paginator="paginatorCustomTable" class="app_table">
             <template #default="{ row }">
                 <td class="app_table_row name">
                     <p>{{ row.name.split(' ')[0] }}</p>
@@ -84,7 +87,7 @@ const makeMember = (row: Record<string, string>) => {
         </DataDeckTable>
 
         <p class="app_subheading">These are custom layout cards:</p>
-        <DataDeckCards :header-metadata="metadata" :data="gymData" class="app_deck">
+        <DataDeckCards :header-metadata="metadata" :data="gymData" :paginator="paginatorCustomCards" class="app_deck">
             <template #default="{ card }">
                 <div class="app_deck_card">
                     <div class="app_deck_card_header">
@@ -137,6 +140,9 @@ const makeMember = (row: Record<string, string>) => {
 
     &_table {
         color: $blues-1;
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
 
         & :deep(table) {
             border-collapse: separate;
