@@ -200,7 +200,17 @@ const makeMember = (row: Record<string, string>) => {
     }
 
     &_deck {
+        width: 984px;
+        
         &_card {
+            width: 320px;
+            overflow: hidden;
+            padding: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            @include transition-hover;
+            transition: all 0.3s $smooth-ease-out;
+            
             &_header {
                 font-size: 24px;
                 display: flex;
@@ -218,7 +228,7 @@ const makeMember = (row: Record<string, string>) => {
                 & > div {
                     display: flex;
                     justify-content: space-between;
-                    margin: 4px 0;
+                    margin: 8px 0;
 
                     & > p:first-of-type {
                         font-weight: bold;

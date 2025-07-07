@@ -54,16 +54,23 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
             class="ddc_deck"
             name="pop"
             appear>
-            <div
-                class="ddc_deck_card"
-                :class="selection.indexOf(card) > -1 ? 'selected' : ''"
-                v-for="(card, cardIndex) in pageData"
-                :key="cardIndex"
-                tabindex="0"
-                @click="select(card)"
-                @keydown.enter.stop="select(card)">
-                <slot v-if="$slots.default" :card="card" /> 
-                <div class="ddc_deck_card_row" v-else v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
+            <div v-for="(card, cardIndex) in pageData" :key="cardIndex">
+                <slot v-if="$slots.default" :card="card" 
+                    class="ddc_deck_card"
+                    :class="selection.indexOf(card) > -1 ? 'selected' : ''"
+                    tabindex="0"
+                    @click="select(card)"
+                    @keydown.enter.stop="select(card)"
+                /> 
+                <div v-else
+                    class="ddc_deck_card"
+                    :class="selection.indexOf(card) > -1 ? 'selected' : ''"
+                    tabindex="0"
+                    @click="select(card)"
+                    @keydown.enter.stop="select(card)"
+                >
+                    <div class="ddc_deck_card_row" v-for="column in headerMetadata" :key="column.value"><b>{{ column.label }}</b>: {{ card[column.value] }} </div>
+                </div>
             </div>
         </TransitionGroup>
         <FooterPanel v-if="paginator.showFooter && paginator.pagination !== 'none'" v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
