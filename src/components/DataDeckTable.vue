@@ -130,7 +130,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
         & > tbody { 
             & > tr {
                 height: 32px;
-                @include transition-hover;
+                background-color: white;
 
                 &:nth-child(even) {
                     background-color: $greyscale-4;
@@ -139,6 +139,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                 & > td {
                     vertical-align: middle;
                     text-align: center;
+                    @include transition-hover;
                 }
 
                 &:hover td, &:focus-visible td {

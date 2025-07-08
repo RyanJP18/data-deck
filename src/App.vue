@@ -146,7 +146,7 @@ const makeMember = (row: Record<string, string>) => {
 
         & :deep(table) {
             border-collapse: separate;
-            border-spacing: 0 6px;
+            border-spacing: 0 $spacing-2;
 
             & th {
                 height: 60px;
@@ -157,6 +157,10 @@ const makeMember = (row: Record<string, string>) => {
             }
 
             & tbody > tr {
+                & td {
+                    @include transition-hover;
+                }
+
                 &:hover td {
                     background-color: $greyscale-4;
                 }
