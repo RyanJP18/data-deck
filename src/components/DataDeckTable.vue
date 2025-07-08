@@ -7,6 +7,8 @@ import type DataPaginator from '@/interfaces/DataPaginator';
 import useDataDeck from '@/composables/useDataDeck';
 import FooterPanel from '@/components/FooterPanel.vue';
 import HeaderPanel from '@/components/HeaderPanel.vue';
+import IconAZ from '@/components/Icons/IconAZ.vue';
+import IconZA from '@/components/Icons/IconZA.vue';
 
 const props = withDefaults(defineProps<DataDeckProps>(), {
     selectionSettings: () => ({ readOnly: false, fireAndForget: true, allowMultiple: false }) as SelectionSettings,
@@ -42,6 +44,14 @@ watch(clicked, () => {
 const querySettings = ref(props.querySettings);
 const paginator = ref(props.paginator);
 
+const headerClicked = (value: string) => {
+    if (querySettings.value.sortColumn === value) {
+        querySettings.value.sortDirection = querySettings.value.sortDirection === 'A-Z' ? 'Z-A' : 'A-Z';
+    } else {
+        querySettings.value.sortColumn = value;
+    }
+};
+
 const { processedData, pageData, select } = useDataDeck(props.data, props.headerMetadata, props.selectionSettings, selection, clicked, querySettings, paginator);
 </script>
 
@@ -52,7 +62,13 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
         <table class="ddt_table">
             <thead>
                 <TransitionGroup tag="tr" name="pop" appear>
-                    <th v-for="header in headerMetadata" :key="header.value">{{ header.label ?? header.value }}</th>
+                    <th v-for="header in headerMetadata" :key="header.value" @click="headerClicked(header.value)">
+                        <div>
+                            <p>{{ header.label ?? header.value }}</p>
+                            <IconAZ v-if="querySettings.sortColumn === header.value && querySettings.sortDirection === 'A-Z'" />
+                            <IconZA v-else-if="querySettings.sortColumn === header.value && querySettings.sortDirection === 'Z-A'" />
+                        </div>
+                    </th>
                 </TransitionGroup>
             </thead>
             <tbody>
@@ -95,6 +111,17 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
 
                     &:hover, &:focus-visible {
                         background-color: $greyscale-3;
+                    }
+
+                    & > div {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        
+                        & > svg {
+                            height: 16px;
+                            margin-left: 4px;
+                        }
                     }
                 }
             }
