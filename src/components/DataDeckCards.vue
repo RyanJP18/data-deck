@@ -94,13 +94,9 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
             @include transition-hover;
             transition: all 0.3s $smooth-ease-out;
 
-            &:hover, &:focus-visible {
+            &:hover, &:focus-visible, .selected {
                 background-color: $greyscale-3;
                 outline: 0;
-            }
-
-            &.selected {
-                background-color: $greyscale-3;
             }
 
             &_row {

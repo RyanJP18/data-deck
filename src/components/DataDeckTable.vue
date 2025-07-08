@@ -60,9 +60,9 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
     <div class="ddt">
         <HeaderPanel v-if="querySettings.showHeader" v-model="querySettings" :headerMetadata="headerMetadata" />
         <table class="ddt_table">
-            <thead>
-                <TransitionGroup tag="tr" name="pop" appear>
-                    <th v-for="header in headerMetadata" :key="header.value" @click="headerClicked(header.value)">
+            <thead class="ddt_table_head">
+                <TransitionGroup class="ddt_table_head_row" tag="tr" name="pop" appear>
+                    <th class="ddt_table_head_row_cell" v-for="header in headerMetadata" :key="header.value" @click="headerClicked(header.value)">
                         <div>
                             <p>{{ header.label ?? header.value }}</p>
                             <IconAZ v-if="querySettings.sortColumn === header.value && querySettings.sortDirection === 'A-Z'" />
@@ -71,19 +71,27 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     </th>
                 </TransitionGroup>
             </thead>
-            <tbody>
-                <TransitionGroup 
-                    tag="tr"
-                    name="pop" 
-                    appear
+            <tbody v-if="$slots.default" class="ddt_table_body">
+                <slot :row="row" 
+                    class="ddt_table_body_row"
+                    :class="selection.indexOf(row) > -1 ? 'selected' : ''"
+                    v-for="(row, rowIndex) in pageData"
+                    :key="rowIndex"
+                    tabindex="0"
+                    @click="select(row)"
+                    @keydown.enter.stop="select(row)"
+                /> 
+            </tbody>
+            <tbody v-else class="ddt_table_body">
+                <TransitionGroup tag="tr" name="pop" appear
+                    class="ddt_table_body_row"
                     :class="selection.indexOf(row) > -1 ? 'selected' : ''"
                     v-for="(row, rowIndex) in pageData"
                     :key="rowIndex"
                     tabindex="0"
                     @click="select(row)"
                     @keydown.enter.stop="select(row)">
-                    <slot v-if="$slots.default" :row="row" /> 
-                    <td v-else v-for="column in headerMetadata" :key="column.value">{{ row[column.value] }}</td>
+                        <td v-for="column in headerMetadata" :key="column.value" class="ddt_table_body_row_cell">{{ row[column.value] }}</td>
                 </TransitionGroup>
             </tbody>
         </table>
@@ -98,12 +106,12 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
         width: 100%;
         white-space: nowrap;
 
-        & > thead {
-            & > tr {
+        &_head {
+            &_row {
                 height: 36px;
                 border-bottom: 1px solid $greyscale-3;
 
-                & > th {
+                &_cell {
                     vertical-align: middle;
                     text-align: center;
                     @include transition-hover;
@@ -127,27 +135,23 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
             }
         }
 
-        & > tbody { 
-            & > tr {
+        &_body { 
+            &_row {
                 height: 32px;
                 background-color: white;
+                @include transition-hover;
 
                 &:nth-child(even) {
                     background-color: $greyscale-4;
                 }
 
-                & > td {
+                &:hover, &:focus-visible, .selected {
+                    background-color: $greyscale-3;
+                }
+
+                &_cell {
                     vertical-align: middle;
                     text-align: center;
-                    @include transition-hover;
-                }
-
-                &:hover td, &:focus-visible td {
-                    background-color: $greyscale-3;
-                }
-
-                &.selected td {
-                    background-color: $greyscale-3;
                 }
             }
         }

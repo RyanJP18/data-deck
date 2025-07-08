@@ -72,17 +72,19 @@ const makeMember = (row: Record<string, string>) => {
         <p class="app_subheading">This is a custom layout table:</p>
         <DataDeckTable :header-metadata="metadataCustom" :data="gymData" :paginator="paginatorCustomTable" class="app_table">
             <template #default="{ row }">
-                <td class="app_table_row name">
-                    <p>{{ row.name.split(' ')[0] }}</p>
-                    <p>{{ row.name.split(' ')[1] }}</p>
-                </td>
-                <td class="app_table_row">{{ row.age }} {{ row.gender[0] }}</td> 
-                <td class="app_table_row">
-                    <button @click="callMember(row)">Call {{ row.mob }}</button>
-                </td> 
-                <td class="app_table_row">
-                    <input type="checkbox" :checked="row.membership_status === 'Active'" @click="makeMember(row)" />
-                </td> 
+                <tr class="app_table_row">
+                    <td class="app_table_row_cell">
+                        <p>{{ row.name.split(' ')[0] }}</p>
+                        <p>{{ row.name.split(' ')[1] }}</p>
+                    </td>
+                    <td class="app_table_row_cell">{{ row.age }} {{ row.gender[0] }}</td> 
+                    <td class="app_table_row_cell">
+                        <button @click="callMember(row)">Call {{ row.mob }}</button>
+                    </td> 
+                    <td class="app_table_row_cell">
+                        <input type="checkbox" :checked="row.membership_status === 'Active'" @click="makeMember(row)" />
+                    </td> 
+                </tr>
             </template>
         </DataDeckTable>
 
@@ -149,62 +151,60 @@ const makeMember = (row: Record<string, string>) => {
             border-spacing: 0 $spacing-2;
 
             & th {
-                height: 60px;
+                height: 40px;
                 padding: $spacing-2;
+                vertical-align: middle;
                 background-color: $blues-1;
                 border: 1px solid $blues-1;
                 color: white;
             }
-
-            & tbody > tr {
-                & td {
-                    @include transition-hover;
-                }
-
-                &:hover td {
-                    background-color: $greyscale-4;
-                }
-            }
-            
         }
 
         &_row {
-            border-top: 1px solid $greyscale-3;
-            border-bottom: 1px solid $greyscale-3;
-            height: 48px;
-            background-color: white;
-            text-align: center; 
+            &:hover td, &:focus-visible td, .selected td {
+                background-color: $blues-3;
+            }
 
-            & > button {
-                border-radius: $rounded;
-                background-color: $blues-2;
-                color: white;
-                width: 160px;
-                padding: $spacing-2;
+            &_cell {
+                border-top: 1px solid $greyscale-3;
+                border-bottom: 1px solid $greyscale-3;
+                height: 60px;
+                background-color: white;
+                text-align: center; 
+                vertical-align: middle;
                 @include transition-hover;
+                
+                &:first-of-type {
+                    display: flex;
+                    align-items: center;
+                    border-left: 1px solid $greyscale-3;
+                    background-color: $greyscale-4; 
+                    text-align: left; 
+                    padding-left: $spacing-3;
+                    font-size: 20px;
 
-                &:hover {
-                    background-color: $blues-3;
+                    & > p + p {
+                        margin-left: $spacing-1;
+                        font-weight: bold;
+                    } 
                 }
-            }
-            
-            &:first-of-type {
-                display: flex;
-                align-items: center;
-                border-left: 1px solid $greyscale-3;
-                background-color: $greyscale-4; 
-                text-align: left; 
-                padding-left: $spacing-3;
-                font-size: 20px;
 
-                & > p + p {
-                    margin-left: $spacing-1;
-                    font-weight: bold;
-                } 
-            }
+                &:last-of-type {
+                    border-right: 1px solid $greyscale-3;
+                }
 
-            &:last-of-type {
-                border-right: 1px solid $greyscale-3;
+                & > button {
+                    border-radius: $rounded;
+                    background-color: $blues-2;
+                    color: white;
+                    width: 160px;
+                    padding: $spacing-2;
+                    @include transition-hover;
+
+                    &:hover {
+                        background-color: $blues-3;
+                    }
+                }
             }
         }
     }
