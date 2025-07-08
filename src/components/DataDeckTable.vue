@@ -71,7 +71,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     </th>
                 </TransitionGroup>
             </thead>
-            <tbody v-if="$slots.default" class="ddt_table_body">
+            <TransitionGroup v-if="$slots.default" tag="tbody" name="pop" appear class="ddt_table_body">
                 <slot :row="row" 
                     class="ddt_table_body_row"
                     :class="selection.indexOf(row) > -1 ? 'selected' : ''"
@@ -81,9 +81,9 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     @click="select(row)"
                     @keydown.enter.stop="select(row)"
                 /> 
-            </tbody>
-            <tbody v-else class="ddt_table_body">
-                <TransitionGroup tag="tr" name="pop" appear
+            </TransitionGroup>
+            <TransitionGroup v-else tag="tbody" name="pop" appear class="ddt_table_body">
+                <tr
                     class="ddt_table_body_row"
                     :class="selection.indexOf(row) > -1 ? 'selected' : ''"
                     v-for="(row, rowIndex) in pageData"
@@ -92,8 +92,8 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     @click="select(row)"
                     @keydown.enter.stop="select(row)">
                         <td v-for="column in headerMetadata" :key="column.value" class="ddt_table_body_row_cell">{{ row[column.value] }}</td>
-                </TransitionGroup>
-            </tbody>
+                </tr>
+            </TransitionGroup>
         </table>
         <FooterPanel v-if="paginator.showFooter && paginator.pagination !== 'none'" v-model="paginator" :processed-data="processedData" @update:modelValue="$event => paginator = $event" />
     </div>
@@ -140,6 +140,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                 height: 32px;
                 background-color: white;
                 @include transition-hover;
+                transition: all 0.3s $smooth-ease-out;
 
                 &:nth-child(even) {
                     background-color: $greyscale-4;

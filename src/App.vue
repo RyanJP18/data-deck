@@ -41,7 +41,7 @@ const metadata = [
 const metadataCustom = [
     { value: 'name', label: 'Name' },
     { value: 'age', label: 'Bio' },
-    { value: 'mob', label: 'Phone Number' },
+    { value: 'mob', label: 'Contact' },
     { value: 'membership_status', label: 'Active?' },
 ];
 
@@ -143,6 +143,7 @@ const makeMember = (row: Record<string, string>) => {
     &_table {
         color: $blues-1;
         width: 800px;
+        min-height: 950px;
         margin-left: auto;
         margin-right: auto;
 
@@ -212,6 +213,7 @@ const makeMember = (row: Record<string, string>) => {
     &_deck {
         color: $blues-1;
         width: 992px;
+        min-height: 773px;
         margin-left: auto;
         margin-right: auto;
 
