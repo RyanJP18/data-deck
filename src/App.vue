@@ -165,8 +165,8 @@ const makeMember = (row: Record<string, string>) => {
         }
 
         &_row {
-            border-top: 1px solid $greyscale-4;
-            border-bottom: 1px solid $greyscale-4;
+            border-top: 1px solid $greyscale-3;
+            border-bottom: 1px solid $greyscale-3;
             height: 48px;
             background-color: white;
             text-align: center; 
@@ -187,7 +187,7 @@ const makeMember = (row: Record<string, string>) => {
             &:first-of-type {
                 display: flex;
                 align-items: center;
-                border-left: 1px solid $greyscale-4;
+                border-left: 1px solid $greyscale-3;
                 background-color: $greyscale-4; 
                 text-align: left; 
                 padding-left: $spacing-3;
@@ -200,7 +200,7 @@ const makeMember = (row: Record<string, string>) => {
             }
 
             &:last-of-type {
-                border-right: 1px solid $greyscale-4;
+                border-right: 1px solid $greyscale-3;
             }
         }
     }

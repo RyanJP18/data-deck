@@ -94,7 +94,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     font-weight: bold;
 
                     &:hover, &:focus-visible {
-                        background-color: $greyscale-2;
+                        background-color: $greyscale-3;
                     }
                 }
             }
