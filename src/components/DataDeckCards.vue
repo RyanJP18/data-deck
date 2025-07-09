@@ -55,14 +55,17 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.fieldM
             name="pop"
             appear>
             <div v-for="(card, cardIndex) in pageData" :key="cardIndex">
-                <slot v-if="$slots.default" :card="card" 
+                <slot
+                    v-if="$slots.default"
+                    :card="card" 
                     class="ddc_deck_card"
                     :class="selection.indexOf(card) > -1 ? 'selected' : ''"
                     tabindex="0"
                     @click="select(card)"
                     @keydown.enter.stop="select(card)"
                 /> 
-                <div v-else
+                <div
+                    v-else
                     class="ddc_deck_card"
                     :class="selection.indexOf(card) > -1 ? 'selected' : ''"
                     tabindex="0"

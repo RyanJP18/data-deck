@@ -45,8 +45,8 @@ const metadataCustom = [
     { value: 'membership_status', label: 'Active?' },
 ];
 
-const paginatorCustomTable = { pagination: 'client', showFooter: true, itemsPerPage: 12, currentPageNo: 1 }; 
-const paginatorCustomCards = { pagination: 'client', showFooter: true, itemsPerPage: 9, currentPageNo: 1 }; 
+const paginatorCustomTable = { pagination: 'client' as 'none' | 'client' | 'server', showFooter: true, itemsPerPage: 12, currentPageNo: 1 }; 
+const paginatorCustomCards = { pagination: 'client' as 'none' | 'client' | 'server', showFooter: true, itemsPerPage: 9, currentPageNo: 1 }; 
 
 const callMember = (row: Record<string, string>) => {
     alert('Calling ' + row.name + ' on ' + row.mob + '...');
