@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type HeaderMetadata from '@/interfaces/HeaderMetadata';
+import type FieldMetadata from '@/interfaces/FieldMetadata';
 import type QuerySettings from '@/interfaces/QuerySettings';
 import IconSearch from '@/components/Icons/IconSearch.vue';
 
 const props = withDefaults(defineProps<{
     modelValue: QuerySettings;
-    headerMetadata: HeaderMetadata[];
+    fieldMetadata: FieldMetadata[];
 }>(), {
 });
 
@@ -23,7 +23,7 @@ const modelValue = ref(props.modelValue);
         <div class="hp_sort">
             <select v-model="modelValue.sortColumn">
                 <option value="" selected disabled hidden>Sort by...</option>
-                <option v-for="header in props.headerMetadata" :value="header.value" :key="header.value">{{ header.label ?? header.value }}</option>
+                <option v-for="header in props.fieldMetadata" :value="header.value" :key="header.value">{{ header.label ?? header.value }}</option>
             </select>
             <select v-model="modelValue.sortDirection">
                 <option>A-Z</option>

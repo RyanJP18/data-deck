@@ -1,11 +1,11 @@
-import type HeaderMetadata from '@/interfaces/HeaderMetadata';
+import type FieldMetadata from '@/interfaces/FieldMetadata';
 import type SelectionSettings from '@/interfaces/SelectionSettings';
 import type QuerySettings from '@/interfaces/QuerySettings';
 import type DataPaginator from '@/interfaces/DataPaginator';
 
 interface DataDeckProps {
     data: Record<string, string>[];
-    headerMetadata: HeaderMetadata[];
+    fieldMetadata: FieldMetadata[];
     selection?: Record<string, string>[];
     selectionSettings?: SelectionSettings;
     querySettings?: QuerySettings;

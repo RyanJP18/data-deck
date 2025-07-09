@@ -31,7 +31,7 @@ const gymData = [
 ];
 
 const metadata = [
-    { value: 'name', label: 'Name' },
+    { value: 'name', label: 'Name'  },
     { value: 'age', label: 'Age' },
     { value: 'gender', label: 'Gender' },
     { value: 'mob', label: 'Phone Number' },
@@ -64,13 +64,13 @@ const makeMember = (row: Record<string, string>) => {
         <p class="app_title">DataDeck Examples</p>
 
         <p class="app_subheading">This is a default table:</p>
-        <DataDeckTable :header-metadata="metadata" :data="gymData" />
+        <DataDeckTable :field-metadata="metadata" :data="gymData" />
 
         <p class="app_subheading">These are default cards:</p>
-        <DataDeckCards :header-metadata="metadata" :data="gymData" />
+        <DataDeckCards :field-metadata="metadata" :data="gymData" />
 
         <p class="app_subheading">This is a custom layout table:</p>
-        <DataDeckTable :header-metadata="metadataCustom" :data="gymData" :paginator="paginatorCustomTable" class="app_table">
+        <DataDeckTable :field-metadata="metadataCustom" :data="gymData" :paginator="paginatorCustomTable" class="app_table">
             <template #default="{ row }">
                 <tr class="app_table_row">
                     <td class="app_table_row_cell">
@@ -89,7 +89,7 @@ const makeMember = (row: Record<string, string>) => {
         </DataDeckTable>
 
         <p class="app_subheading">These are custom layout cards:</p>
-        <DataDeckCards :header-metadata="metadata" :data="gymData" :paginator="paginatorCustomCards" class="app_deck">
+        <DataDeckCards :field-metadata="metadata" :data="gymData" :paginator="paginatorCustomCards" class="app_deck">
             <template #default="{ card }">
                 <div class="app_deck_card">
                     <div class="app_deck_card_header">

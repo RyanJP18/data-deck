@@ -42,13 +42,13 @@ watch(clicked, () => {
 const querySettings = ref(props.querySettings);
 const paginator = ref(props.paginator);
 
-const { processedData, pageData, select } = useDataDeck(props.data, props.headerMetadata, props.selectionSettings, selection, clicked, querySettings, paginator);
+const { processedData, pageData, select } = useDataDeck(props.data, props.fieldMetadata, props.selectionSettings, selection, clicked, querySettings, paginator);
 </script>
 
 
 <template>
     <div class="ddc">
-        <HeaderPanel v-if="querySettings.showHeader" v-model="querySettings" :headerMetadata="headerMetadata" />
+        <HeaderPanel v-if="querySettings.showHeader" v-model="querySettings" :fieldMetadata="fieldMetadata" />
         <TransitionGroup
             tag="div"
             class="ddc_deck"
@@ -69,7 +69,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     @click="select(card)"
                     @keydown.enter.stop="select(card)"
                 >
-                    <div class="ddc_deck_card_row" v-for="column in headerMetadata" :key="column.value"><b>{{ column.label ?? column.value }}</b>: {{ card[column.value] }} </div>
+                    <div class="ddc_deck_card_row" v-for="column in fieldMetadata" :key="column.value"><b>{{ column.label ?? column.value }}</b>: {{ card[column.value] }} </div>
                 </div>
             </div>
         </TransitionGroup>

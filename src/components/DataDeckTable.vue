@@ -52,17 +52,17 @@ const headerClicked = (value: string) => {
     }
 };
 
-const { processedData, pageData, select } = useDataDeck(props.data, props.headerMetadata, props.selectionSettings, selection, clicked, querySettings, paginator);
+const { processedData, pageData, select } = useDataDeck(props.data, props.fieldMetadata, props.selectionSettings, selection, clicked, querySettings, paginator);
 </script>
 
 
 <template>
     <div class="ddt">
-        <HeaderPanel v-if="querySettings.showHeader" v-model="querySettings" :headerMetadata="headerMetadata" />
+        <HeaderPanel v-if="querySettings.showHeader" v-model="querySettings" :fieldMetadata="fieldMetadata" />
         <table class="ddt_table">
             <thead class="ddt_table_head">
                 <TransitionGroup class="ddt_table_head_row" tag="tr" name="pop" appear>
-                    <th class="ddt_table_head_row_cell" v-for="header in headerMetadata" :key="header.value" @click="headerClicked(header.value)">
+                    <th class="ddt_table_head_row_cell" v-for="header in fieldMetadata" :key="header.value" @click="headerClicked(header.value)">
                         <div>
                             <p>{{ header.label ?? header.value }}</p>
                             <IconAZ v-if="querySettings.sortColumn === header.value && querySettings.sortDirection === 'A-Z'" />
@@ -91,7 +91,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.header
                     tabindex="0"
                     @click="select(row)"
                     @keydown.enter.stop="select(row)">
-                        <td v-for="column in headerMetadata" :key="column.value" class="ddt_table_body_row_cell">{{ row[column.value] }}</td>
+                        <td v-for="column in fieldMetadata" :key="column.value" class="ddt_table_body_row_cell">{{ row[column.value] }}</td>
                 </tr>
             </TransitionGroup>
         </table>

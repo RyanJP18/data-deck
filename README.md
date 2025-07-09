@@ -41,8 +41,8 @@ The two primary components exported by this package are: DataDeckTable for table
 ```
 4) Provide the data and metadata to the component, e.g.
 ``` html 
-   <DataDeckTable :data="gymData" :header-metadata="gymMetadata" />
-   <DataDeckCards :data="gymData" :header-metadata="gymMetadata"  />
+   <DataDeckTable :data="gymData" :field-metadata="gymMetadata" />
+   <DataDeckCards :data="gymData" :field-metadata="gymMetadata"  />
 ```
 
 This will render DataDeck components with default settings and styling.
@@ -50,14 +50,14 @@ This will render DataDeck components with default settings and styling.
 ## Configuration
 
 ### Data Mappings
-It is a common use case for data to be displayed, filtered or sorted differently to its raw form. These relationships can be defined in HeaderMetadata.
+It is a common use case for data to be displayed, filtered or sorted differently to its raw form. These relationships can be defined in FieldMetadata.
 
 ``` typescript
-interface HeaderMetadata {
-   value: string; // Required. The field containing the data for this column, e.g. dob (as in, data.dob)
-   label?: string; // Optional. The header label to be used for this column, e.g. 'Date of Birth'
-   sortMapping?: string; // Optional. The field used to sort this column, e.g. we might want dob to invisibly use dob_timedate for sorting
-   filterMapping?: string; // Optional. The field used to filter this column, e.g. we might want forename to invisibly use full_name for filtering
+interface FieldMetadata {
+   value: string; // Required. The the actual data field, e.g. dob (as in, data.dob)
+   label?: string; // Optional. The label to be used for this field, e.g. 'Date of Birth'
+   sortMapping?: string; // Optional. A different field used to sort this one, e.g. we might want dob to invisibly use dob_timedate for sorting
+   filterMapping?: string; // Optional. A different field used to filter this one, e.g. we might want forename to invisibly use full_name for filtering
    useInFilter?: boolean; // Optional. Whether this field (or its mapping) should be considered by the filter, default true
 }
 ```
@@ -86,7 +86,7 @@ If `fireAndForget` is `true`, the `selection` event provides the selected card o
 ``` html 
    <DataDeckTable 
       :data="gymData"
-      :header-metadata="gymMetadata" 
+      :field-metadata="gymMetadata" 
       :selection-settings="{ readOnly: false, fireAndForget: true, allowMultiple: false }"
       @selection="someEventHandler" 
    />
@@ -102,7 +102,7 @@ If `fireAndForget` is `false`, the `selection` event fires on click, maintaining
    <DataDeckTable 
       v-model="selection"
       :data="gymData"
-      :header-metadata="metadata"  
+      :field-metadata="metadata"  
       :selection-settings="{ readOnly: false, fireAndForget: false, allowMultiple: false }"
       @selection="someEventHandler" 
       @deselection="someOtherEventHandler" 
@@ -121,7 +121,7 @@ If `fireAndForget` is `false` and `allowMultiple` is `true`, the `selection` and
    <DataDeckTable 
       v-model="selection"
       :data="gymData"
-      :header-metadata="metadata"  
+      :field-metadata="metadata"  
       :selection-settings="{ readOnly: false, fireAndForget: false, allowMultiple: true }"
       @selection="someEventHandler" 
       @deselection="someOtherEventHandler" 

@@ -1,12 +1,12 @@
 import { ref, computed, watch, type Ref } from 'vue';
-import type HeaderMetadata from '@/interfaces/HeaderMetadata';
+import type FieldMetadata from '@/interfaces/FieldMetadata';
 import type SelectionSettings from '@/interfaces/SelectionSettings';
 import type QuerySettings from '@/interfaces/QuerySettings';
 import type DataPaginator from '@/interfaces/DataPaginator';
 
 const useDataDeck = (
     data: Record<string, string>[], 
-    headerMetadata: HeaderMetadata[], 
+    fieldMetadata: FieldMetadata[], 
     selectionSettings: SelectionSettings,
     selection: Ref<Record<string, string>[]>, 
     clicked: Ref<Record<string, string> | null>,
@@ -50,7 +50,7 @@ const useDataDeck = (
     watch(processedFilterQuery, () => currentPageNo.value = 1);
 
     // Determine which columns are whitelisted for use in filtering
-    const filterWhitelist = computed(() => headerMetadata
+    const filterWhitelist = computed(() => fieldMetadata
         .filter(metadata => metadata.useInFilter ?? true)
         .map(metadata => metadata.filterMapping ?? metadata.value)
     );
@@ -70,8 +70,10 @@ const useDataDeck = (
         } 
     
         return filteredData.value.slice().sort((rawA, rawB) => {
-            const a = (rawA[querySettings.value.sortColumn]?.toString() || '').toLowerCase();
-            const b = (rawB[querySettings.value.sortColumn]?.toString() || '').toLowerCase();
+            const sortColumn = fieldMetadata.find(metadata => metadata.value === querySettings.value.sortColumn)?.sortMapping ?? querySettings.value.sortColumn;
+
+            const a = (rawA[sortColumn]?.toString() || '').toLowerCase();
+            const b = (rawB[sortColumn]?.toString() || '').toLowerCase();
             
             // If both values start with numbers, do a numerical sort instead
             const numMatchA = a.match(/^\d+/);
