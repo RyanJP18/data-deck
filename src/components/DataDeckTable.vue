@@ -81,7 +81,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.fieldM
                 <slot
                     :row="row" 
                     class="ddt_table_body_row"
-                    :class="selection.indexOf(row) > -1 ? 'selected' : ''"
+                    :class="{ selected: selection.some(item => JSON.stringify(item) === JSON.stringify(row)) }"
                     v-for="(row, rowIndex) in pageData"
                     :key="rowIndex"
                     tabindex="0"
@@ -97,7 +97,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.fieldM
                 class="ddt_table_body">
                 <tr
                     class="ddt_table_body_row"
-                    :class="selection.indexOf(row) > -1 ? 'selected' : ''"
+                    :class="{ selected: selection.some(item => JSON.stringify(item) === JSON.stringify(row)) }"
                     v-for="(row, rowIndex) in pageData"
                     :key="rowIndex"
                     tabindex="0"

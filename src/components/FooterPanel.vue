@@ -86,7 +86,7 @@ const choose = (page: number) => {
         <p class="fp_carousel">
             <a
                 class="fp_carousel_page"
-                :class="parseInt(page) === paginator.currentPageNo ? 'active' : ''"
+                :class="{ active: parseInt(page) === paginator.currentPageNo }"
                 :key="page"
                 v-for="page in pageRange"
                 @click="choose(parseInt(page))">{{ page }}</a>

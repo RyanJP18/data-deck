@@ -60,7 +60,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.fieldM
                     v-if="$slots.default"
                     :card="card" 
                     class="ddc_deck_card"
-                    :class="selection.indexOf(card) > -1 ? 'selected' : ''"
+                    :class="{ selected: selection.some(item => JSON.stringify(item) === JSON.stringify(card)) }"
                     tabindex="0"
                     @click="select(card)"
                     @keydown.enter.stop="select(card)"
@@ -68,7 +68,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.fieldM
                 <div
                     v-else
                     class="ddc_deck_card"
-                    :class="selection.indexOf(card) > -1 ? 'selected' : ''"
+                    :class="{ selected: selection.some(item => JSON.stringify(item) === JSON.stringify(row)) }"
                     tabindex="0"
                     @click="select(card)"
                     @keydown.enter.stop="select(card)"

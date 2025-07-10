@@ -45,8 +45,8 @@ const metadataCustom = [
     { value: 'membership_status', label: 'Active?' },
 ];
 
-const paginatorCustomTable = { pagination: 'client' as 'none' | 'client' | 'server', showFooter: true, itemsPerPage: 12, currentPageNo: 1 }; 
-const paginatorCustomCards = { pagination: 'client' as 'none' | 'client' | 'server', showFooter: true, itemsPerPage: 9, currentPageNo: 1 }; 
+const paginatorCustomTable = { pagination: 'client' as 'none' | 'client' | 'server', showFooter: true, itemsPerPage: 12, currentPageNo: 1 };
+const paginatorCustomCards = { pagination: 'client' as 'none' | 'client' | 'server', showFooter: true, itemsPerPage: 9, currentPageNo: 1 };
 
 const callMember = (row: Record<string, string>) => {
     alert('Calling ' + row.name + ' on ' + row.mob + '...');
@@ -77,13 +77,13 @@ const makeMember = (row: Record<string, string>) => {
                         <p>{{ row.name.split(' ')[0] }}</p>
                         <p>{{ row.name.split(' ')[1] }}</p>
                     </td>
-                    <td class="app_table_row_cell">{{ row.age }} {{ row.gender[0] }}</td> 
+                    <td class="app_table_row_cell">{{ row.age }} {{ row.gender[0] }}</td>
                     <td class="app_table_row_cell">
                         <button @click="callMember(row)">Call {{ row.mob }}</button>
-                    </td> 
+                    </td>
                     <td class="app_table_row_cell">
                         <input type="checkbox" :checked="row.membership_status === 'Active'" @click="makeMember(row)" />
-                    </td> 
+                    </td>
                 </tr>
             </template>
         </DataDeckTable>
@@ -105,13 +105,13 @@ const makeMember = (row: Record<string, string>) => {
                             <p>Contact</p>
                             <p>{{ card.mob }}</p>
                         </div>
-                        <div> 
+                        <div>
                             <p>Membership</p>
                             <input type="checkbox" :checked="card.membership_status === 'Active'" @click="makeMember(card)" />
                         </div>
-                        <button @click="callMember(card)">Contact</button>  
+                        <button @click="callMember(card)">Contact</button>
                     </div>
-                </div> 
+                </div>
             </template>
         </DataDeckCards>
     </div>
@@ -164,6 +164,7 @@ const makeMember = (row: Record<string, string>) => {
         &_row {
             &:hover td, &:focus-visible td, &.selected td {
                 background-color: $blues-3;
+                color: white;
             }
 
             &_cell {
@@ -171,23 +172,23 @@ const makeMember = (row: Record<string, string>) => {
                 border-bottom: 1px solid $greyscale-3;
                 height: 60px;
                 background-color: white;
-                text-align: center; 
+                text-align: center;
                 vertical-align: middle;
                 @include transition-hover;
-                
+
                 &:first-of-type {
                     display: flex;
                     align-items: center;
                     border-left: 1px solid $greyscale-3;
-                    background-color: $greyscale-4; 
-                    text-align: left; 
+                    background-color: $greyscale-4;
+                    text-align: left;
                     padding-left: $spacing-3;
                     font-size: 20px;
 
                     & > p + p {
                         margin-left: $spacing-1;
                         font-weight: bold;
-                    } 
+                    }
                 }
 
                 &:last-of-type {
@@ -231,7 +232,7 @@ const makeMember = (row: Record<string, string>) => {
                 color: white;
                 outline: 0;
             }
-            
+
             &_header {
                 font-size: 24px;
                 display: flex;
@@ -242,7 +243,7 @@ const makeMember = (row: Record<string, string>) => {
                 & > p + p {
                     margin-left: $spacing-1;
                     font-weight: bold;
-                } 
+                }
             }
 
             &_body {

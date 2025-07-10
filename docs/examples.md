@@ -145,6 +145,7 @@ In this example, the table rows are spaced apart and the first field is bolded. 
     &_row {
         &:hover td, &:focus-visible td, &.selected td {
             background-color: #44A1F2;
+            color: white;
         }
 
         &_cell {
