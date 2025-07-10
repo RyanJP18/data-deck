@@ -68,7 +68,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.fieldM
                 <div
                     v-else
                     class="ddc_deck_card"
-                    :class="{ selected: selection.some(item => JSON.stringify(item) === JSON.stringify(row)) }"
+                    :class="{ selected: selection.some(item => JSON.stringify(item) === JSON.stringify(card)) }"
                     tabindex="0"
                     @click="select(card)"
                     @keydown.enter.stop="select(card)"
