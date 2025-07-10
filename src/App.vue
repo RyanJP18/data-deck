@@ -162,7 +162,7 @@ const makeMember = (row: Record<string, string>) => {
         }
 
         &_row {
-            &:hover td, &:focus-visible td, .selected td {
+            &:hover td, &:focus-visible td, &.selected td {
                 background-color: $blues-3;
             }
 

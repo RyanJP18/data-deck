@@ -21,6 +21,7 @@ const emit = defineEmits(['selected', 'deselected']);
 
 const clicked = ref<Record<string, string> | null>(null);
 const selection = ref(props.selection);
+
 let clickFlush = false;
 
 watch(clicked, () => {
@@ -97,7 +98,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.fieldM
             @include transition-hover;
             transition: all 0.3s $smooth-ease-out;
 
-            &:hover, &:focus-visible, .selected {
+            &:hover, &:focus-visible, &.selected {
                 background-color: $greyscale-3;
                 outline: 0;
             }

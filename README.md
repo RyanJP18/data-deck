@@ -6,8 +6,7 @@
     - [Event Handling and Selection Settings](#event-handling-and-selection-settings)
     - [Query Settings](#query-settings)
     - [Pagination Settings](#pagination-settings)
-  - [Layout Customisation](#layout-customisation)
-- [Examples](#examples)
+  - [Design Customisation and Examples](#design-customisation-and-examples)
 
 # About
 A set of extensible and data-driven components for Vue, designed to display data in both table and card formats. DataDeck makes extensive use of Vue 3 composition in order to provide DataDeckTable and DataDeckCards; two functionally identical, yet visually distinct components. It has out of the box support for sorting, filtering, pagination, custom layouts via slots and more.
@@ -165,8 +164,5 @@ By default, `pagination` is managed `client`-side. Pagination can be disabled en
 
 If `pagination` is set to `server`, DataDeck will expect these fields to be updated through API calls and therefore no longer update them internally. 
 
-## Layout Customisation
-Work in progress
-
-# Examples
-See [docs/examples.md](docs/examples.md).
+## Design Customisation and Examples
+It is recommended that the basic default styles are overridden. See [docs/examples.md](docs/examples.md) for a guide on how to do this.

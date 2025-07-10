@@ -23,6 +23,7 @@ const emit = defineEmits(['selected', 'deselected']);
 
 const clicked = ref<Record<string, string> | null>(null);
 const selection = ref(props.selection);
+
 let clickFlush = false;
 
 watch(clicked, () => {
@@ -157,7 +158,7 @@ const { processedData, pageData, select } = useDataDeck(props.data, props.fieldM
                     background-color: $greyscale-4;
                 }
 
-                &:hover, &:focus-visible, .selected {
+                &:hover, &:focus-visible, &.selected {
                     background-color: $greyscale-3;
                 }
 
