@@ -107,7 +107,7 @@ In this example, a header is formed from the forename and surname. The bottom ha
 ```
 
 ## Table Example
-DataDeckTable is a little more complicated in that it requires two overrides: the table iteself and the rows. 
+DataDeckTable is a little more complicated in that it requires two overrides: the table itself and the rows. 
 
 ### Row Override
 Styling the rows works the same as styling cards for DataDeckCards ([Cards Example](#cards-example))- Assign a class to the DataDeckTable component, provide a row template definition and then target each element in CSS. 
