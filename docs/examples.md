@@ -137,10 +137,10 @@ In this example, the table rows are spaced apart and the first field is bolded. 
 ```
 
 ``` scss
-&_table {
+.table {
     color: #071040;
 
-    # ...table css here...
+    // ...table css here...
     
     &_row {
         &:hover td, &:focus-visible td, &.selected td {
@@ -196,6 +196,7 @@ In this example, the table rows are spaced apart and the first field is bolded. 
 ### Table Override
 Overriding the table can be achieved through pure CSS using the `:deep` selector. No HTML overriding is necessary.
 
+``` scss
 .table {
     color: #071040;
 
@@ -213,8 +214,9 @@ Overriding the table can be achieved through pure CSS using the `:deep` selector
         }
     }
 
-    # ...row css here...
+    // ...row css here...
 }
+```
 
 
 
