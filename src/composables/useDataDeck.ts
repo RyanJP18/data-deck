@@ -25,7 +25,8 @@ const useDataDeck = (
         }
 
         if (!selectionSettings.fireAndForget) {
-            const selectedIdx = selection.value.indexOf(item);
+
+            const selectedIdx = selection.value.findIndex(sel => JSON.stringify(sel) === JSON.stringify(item));
             const alreadySelected = selectedIdx > -1;
 
             if (!alreadySelected) {
