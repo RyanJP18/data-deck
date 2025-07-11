@@ -1,30 +1,26 @@
 {
 	"name": "data-deck",
-	"version": "0.3.0",
-	"description": "An extensible and data-driven component for Vue, designed to display data in both table and card formats.",
-	"repository": "git@github.com:RyanJP18/data-deck.git",
-	"author": "RyanJP18 <contact@ryanjp.co.uk>",
+	"version": "0.4.0",
+	"description": "A set of extensible and data-driven components for Vue, designed to display data in both table and card formats.",
+	"repository": { "type": "git", "git@github.com:RyanJP18/data-deck.git" },
+	"homepage": "https://github.com/RyanJP18/data-deck",
+	"author": "Ryan James Phelan <contact@ryanjp.co.uk>",
+	"keywords": ["vue", "component", "table", "datatable", "card", "gallery", "datadeck", "data-deck"],
 	"license": "MIT",
-	"private": true,
 	"type": "module",
-	"files": [
-		"dist"
-	],
+	"files": ["dist", "docs", "README.md"],
 	"main": "dist/index.js",
 	"module": "dist/index.es.js",
 	"types": "dist/index.d.ts",
-	"publishConfig": {
-		"access": "public"
-	},
+	"publishConfig": { "access": "public" },
 	"scripts": {
-		"dev": "vite",
 		"build": "vue-tsc && vite build --mode=production && yarn run types",
 		"types": "vue-tsc --noEmit false --declaration --emitDeclarationOnly --outDir dist",
 		"typecheck": "vue-tsc --noEmit -p tsconfig.json --composite false",
 		"lint": "eslint . --fix",
 		"test": "vitest run"
 	},
-	"dependencies": {
+	"peerDependencies": {
 		"vue": "^3.4.0"
 	},
 	"devDependencies": {
@@ -41,8 +37,10 @@
 		"sass": "^1.77.6",
 		"typescript": "^5.0.2",
 		"vite": "^6.2.5",
+		"vite-plugin-css-injected-by-js": "^3.5.2",
 		"vite-plugin-dts": "^4.5.4",
 		"vitest": "^3.1.2",
+		"vue": "^3.4.0",
 		"vue-tsc": "^2.2.8"
 	}
 }

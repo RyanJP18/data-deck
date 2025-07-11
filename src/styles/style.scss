@@ -1,10 +1,10 @@
-* {
+.ddt *, .ddc * {
 	box-sizing: border-box;
     font-size: 16px;
     font-family: inherit;
 }
 
-button {
+.ddt button, .ddc button {
     outline: none;
     border: 0;
     background-color: unset;
@@ -17,7 +17,25 @@ button {
 	}
 }
 
-input, textarea, select, tr {
+.ddt input, .ddc input, .ddt select, .ddc select, .ddt tr, .ddc tr {
     outline: none;
     border: 0;
+}
+
+.ddt div, .ddc div, .ddt span, .ddc span, .ddt p, .ddc p, .ddt a, .ddc a,
+.ddt table, .ddc table, .ddt tbody, .ddc tbody, .ddt thead, .ddc thead, 
+.ddt tr, .ddc tr, .ddt th, .ddc th, .ddt td, .ddc td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+.ddt ol, .ddc ol, .ddt ul, .ddc ul {
+	list-style: none;
+}
+.ddt table, .ddc table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }

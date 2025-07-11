@@ -6,7 +6,7 @@
   - [Header and Footer Replacement](#header-and-footer-replacement)
 
 # Design Customisation
-The DataDeck visual design is customised via CSS. This should be combined with proper [configuration](../README.md#configuration) to achieve unique and tailor-fit implementions.
+The DataDeck visual design is customised via CSS. This should be combined with proper [configuration](configuration.md) to achieve unique and tailor-fit implementions.
 
 Overriding the default styles is slightly different for the table and cards variants, but the underlying principle is the same.
 
