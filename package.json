@@ -2,17 +2,35 @@
 	"name": "data-deck",
 	"version": "0.4.0",
 	"description": "A set of extensible and data-driven components for Vue, designed to display data in both table and card formats.",
-	"repository": "git@github.com:RyanJP18/data-deck.git",
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/RyanJP18/data-deck.git"
+	},
 	"homepage": "https://github.com/RyanJP18/data-deck",
 	"author": "Ryan James Phelan <contact@ryanjp.co.uk>",
-	"keywords": ["vue", "component", "table", "datatable", "card", "gallery", "datadeck", "data-deck"],
+	"keywords": [
+		"vue",
+		"component",
+		"table",
+		"datatable",
+		"card",
+		"gallery",
+		"datadeck",
+		"data-deck"
+	],
 	"license": "MIT",
 	"type": "module",
-	"files": ["dist", "docs", "README.md"],
+	"files": [
+		"dist",
+		"docs",
+		"README.md"
+	],
 	"main": "dist/index.js",
 	"module": "dist/index.es.js",
 	"types": "dist/index.d.ts",
-	"publishConfig": { "access": "public" },
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "vue-tsc && vite build --mode=production && yarn run types",
 		"types": "vue-tsc --noEmit false --declaration --emitDeclarationOnly --outDir dist",
